@@ -1,0 +1,48 @@
+@import '../rules/colors.less';
+@import '../rules/floatFix.less';
+.table {
+  box-shadow: 0 0 0 1px @grey400;
+  position: relative;
+}
+
+.th {
+  .floatFix;
+  background: @grey700;
+  box-shadow: 0 1px 0 0 @grey400;
+  width: 100%;
+  .td {
+    color: @grey50;
+  }
+}
+
+.td {
+  float: left;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 5px 15px;
+  transition: all cubic-bezier(.15, .27, 0, 1) .2s;
+}
+
+.tdIn {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: inherit;
+}
+
+.tr {
+  .floatFix;
+  box-shadow: 0 1px 0 0 @grey400;
+  width: 100%;
+}
+
+.line {
+  width: 1px;
+  background: @grey400;
+  position: absolute;
+  top: 0;
+  cursor: move;
+  transition: all cubic-bezier(.15, .27, 0, 1) .2s;
+}

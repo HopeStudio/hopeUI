@@ -1,0 +1,77 @@
+@import '../rules/colors.less';
+.checkTick {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.checkTick-disabled {
+  cursor: not-allowed;
+}
+
+.text {
+  margin-left: 25px;
+  vertical-align: middle;
+}
+
+.label {
+  cursor: inherit;
+}
+
+.input {
+  position: absolute;
+  cursor: inherit;
+  pointer-events: all;
+  opacity: 0;
+  height: 100%;
+  z-index: -50;
+  left: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  visibility: hidden;
+}
+
+.iconCommon {
+  position: absolute;
+  vertical-align: middle;
+  display: inline-block;
+  transition: all .45s;
+}
+
+.normalIconOn {
+  .iconCommon;
+  transform: scale(1, 1);
+  opacity: 1;
+}
+
+.normalIconOff {
+  .iconCommon;
+  transform: scale(.3, .3);
+  opacity: 0;
+}
+
+.checkedIconOn {
+  .iconCommon;
+  transform: scale(1, 1);
+  opacity: 1;
+}
+
+.checkedIconOff {
+  .iconCommon;
+  transform: scale(.3, .3);
+  opacity: 0;
+}
+
+.disabledIcon {
+  .iconCommon;
+}
+
+.disabled {
+  display: none;
+}
+
+.text-disabled {
+  color: @grey500;
+}

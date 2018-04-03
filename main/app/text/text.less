@@ -1,0 +1,95 @@
+@import '../rules/colors.less';
+@import '../rules/floatFix.less';
+.text {
+  .floatFix;
+  line-height: 1.5rem;
+  height: 1.5rem;
+  position: relative;
+  margin: 15px 0;
+}
+
+.textTitle {
+  float: left;
+}
+.textBox {
+  display: inline-block;
+  float: right;
+  position: relative;
+  width: 180px;
+}
+.textArea {
+  box-shadow: 1px 1px 10px 2px @grey200;
+  border-radius: .5rem;
+  width: 100%;
+  height: 25px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.textInput {
+  border: none;
+  box-sizing: border-box;
+  background: transparent;
+  padding-left: 8%;
+  padding-right: 20%;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 100%;
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.textDown {
+  position: absolute;
+  width: 100%;
+  z-index: 1500;
+  height: auto;
+  top: 20px;
+  background: @grey50;
+  transition: all ease-out .2s;
+  box-shadow: 0px 2px 10px 1px @grey200;
+  border-radius: .5rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.textHide {
+  opacity: 0;
+  height: 0;
+  transform: translateY(-10px);
+  transition: all ease-out .2s;
+}
+
+.textList {
+  width: 100%;
+  padding: 0;
+  margin: 8px 0 0 0;
+  box-sizing: border-box;
+}
+
+.textItem {
+  cursor: pointer;
+  width: 100%;
+  padding: 0 15px;
+  margin: 1px 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  transition: background ease-out .3s;
+  &:last-child span {
+    box-shadow: none;
+  }
+  &:hover {
+    background: @grey300;
+  }
+  span {
+    display: inline-block;
+    width: 100%;
+    box-shadow: 0 1px 0 0 @grey300;
+    padding: 8px 10px 4px 10px;
+    box-sizing: inherit;
+  }
+}
