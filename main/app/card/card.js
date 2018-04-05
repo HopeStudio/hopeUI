@@ -35,18 +35,47 @@ class Card extends React.Component {
   }
 
   componentDidMount() {
-    const { areaStyle } = this.props;
+    const { areaStyle, title } = this.props;
   }
 
   render() {
-    const { className: propClassName, coverBorder } = this.props;
+    const { className: propClassName, coverBorder,
+            description, author, hits, comments, } = this.props;
+
+    let desEle = null;
+    let hitsEle = null;
+    let commentsEle = null;
+
+    if (description !== false) {
+      description = <div className={classnames(cssCard.description)}>{description}</div>;
+    }
+
+    if (hits !== false) {
+      hitsEle = <div className={classnames(cssCard.hits)}>{hits}</div>;
+    }
+
+    if (comments !== false) {
+      commentsEle = <div className={classnames(cssCard.comments)}>{comments}</div>;
+    }
 
     return (
       <div className={classnames(propClassName, cssCard.card, `card-${this.uuid}`)}>
         <div className={classnames(cssCard.cardContent)}>
           <div className={classnames(cssCard.coverContainer, { coverBorder: coverBorder })}>
-            <div className={classnames(cssCard.cover)}>
-
+            <div className={classnames(cssCard.cover)} />
+            <div className={classnames(cssCard.info)}>
+              <div className={classnames(cssCard.title)}>{title}</div>
+              {description}
+            </div>
+            <div className={classnames(cssCard.item)}>
+              <div classname={classnames(cssCard.author)}>
+                <div classnames={cssCard.avatar} />
+                <div classnames={cssCard.authorName}>{author}</div>
+              </div>
+              <div classname={classnames(cssCard.record)}>
+                {hitsEle}
+                {commentsEle}
+              </div>
             </div>
           </div>
         </div>
