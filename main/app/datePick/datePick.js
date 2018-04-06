@@ -7,49 +7,69 @@ import colors from '../rules/colors.js';
 import cssDatePick from './datePick.less';
 import uuid from '../tools/uuid.js';
 import colorTrans from '../tools/colorTrans.js';
+import dateItem from './dateItem.js';
 
 class DatePick extends React.Component {
+  static Item = dateItem
+  state = {
+    year: '',
+    month: '',
+    day: '',
+    dateObj: [],
+    isDown: false
+  }
+  getValue() {
+    const {dateObj} = this.state;
+    let value = Object
+      .values(dateObj)
+      .join(';')
+    return value;
+  }
+  clickHandle = e => {
+    this.setState({
+      isDown: !this.state.isDown
+    })
+  }
+  changeHandle = e => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
   render() {
-    
+    const {buttonIcon, className: propClassName, children} = this.props;
+    const dateDown = this.state.isDown
+      ? 'dateDown'
+      : 'dateHide';
+    return (
+      <div className={classnames(propClassName, cssDatePick.datePick, this.uuid)}>
+        <div className={classnames(cssDatePick.dateBox)}>
+          <div className={classnames('hope-dateArea', cssDatePick.dateArea)}>
+            <input
+              type="text"
+              className={classnames(cssDatePick.dateInput)}
+              value={this.getValue()}
+              onChange={this.changeHandle}/>
+          </div>
+          <div className={classnames(cssDatePick.dateBtn)} onClick={this.clickHandle}>
+            {buttonIcon}
+          </div>
+        </div>
+        <div className={classnames(cssDatePick[dateDown])}>
+          <ul className={classnames(cssDatePick.dateList)}>
+            {this.itemArr}
+          </ul>
+        </div>
+      </div>
+    )
   }
 }
 
 DatePick.propTypes = {
-  // 是否禁用
-  disabled: PropTypes.bool,
-  // 下拉框样式
-  normalStyle: PropTypes.object,
-  // 选中样式
-  selectStyle: PropTypes.object,
-  // 触发按钮Icon
-  buttonIcon: PropTypes.object,
-  // 是否多选
-  isMultiple: PropTypes.bool,
-  // 是否可填写
-  isInput: PropTypes.bool,
-  // 是否自动识别
-  ableAutoComplete: PropTypes.bool,
-  // 数据
-  data: PropTypes.object.isRequired,
-  // 默认选中的数据键组
-  defaultKey: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+  // 单日、多日或日期范围
+  type: PropTypes.oneOf(['simple', 'scale', 'multiple'])
 }
 
 DatePick.defaultProps = {
-  disabled: false,
-  buttonIcon: <ArrowDropDown fillcolor='grey700'/>,
-  onChange: (value) => {
-    console.log(value)
-  },
-  defaultKey: '0',
-  selectStyle: {
-    background: 'blue400',
-    color: 'grey50'
-  },
-  normalStyle: {
-    background: 'transparent',
-    color: 'grey900'
-  }
+  type: 'simple'
 }
 
 export default DatePick;
