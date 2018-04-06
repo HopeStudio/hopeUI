@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import cssReset from './rules/reset.less'
-
+import cssReset from './rules/reset.less';
+import cssRipples from './rules/ripples.less';
 import Button from './button/button.js';
 import ScrollBox from './scrollBox/scrollBox.js';
 import CheckTick from './checkTick/checkTick.js';
 import DownSelect from './downSelect/downSelect.js';
 import Table from './table/table.js';
 import Text from './text/text.js';
+import DatePick from './datePick/datePick.js';
 
 import {
   ArrowDown,
@@ -35,6 +36,10 @@ class Hope extends React.Component {
   render() {
     return (
       <div>
+        <div>
+          <h2>DatePick</h2>
+          <DatePick></DatePick>
+        </div>
         <div>
           <h2>Text</h2>
           <Text title='用户名'></Text>
