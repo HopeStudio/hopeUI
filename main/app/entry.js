@@ -137,11 +137,46 @@ class Hope extends React.Component {
         </div>
         <div>
           <h2>Card</h2>
-          <Card colums={5} title="测试标题"/>
-          <Card colums={5} title="测试标题"/>
-          <Card colums={5} title="测试标题"/>
-          <Card colums={5} title="测试标题"/>
-          <Card colums={5} title="测试标题"/>
+          <Card columns={6} description={true} hits={true} comments={true} data={
+            [
+              {
+                title: '测试标题0',
+                description: '这是一段描述文字',
+                hits: 111,
+                comments: 123,
+              },
+              {
+                title: '测试标题1',
+                description: '这是一段描述文字',
+                hits: 111,
+                comments: 123,
+              },
+              {
+                title: '测试标题2',
+                description: '这是一段描述文字',
+                hits: 111,
+                comments: 123,
+              },
+              {
+                title: '测试标题3',
+                description: '这是一段描述文字',
+                hits: 111,
+                comments: 123,
+              },
+              {
+                title: '测试标题4',
+                description: '这是一段描述文字',
+                hits: 111,
+                comments: 123,
+              },
+              {
+                title: '测试标题5',
+                description: '这是一段描述文字',
+                hits: 111,
+                comments: 123,
+              },
+            ]
+          }/>
         </div>
       </div>
     )

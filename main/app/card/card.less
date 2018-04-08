@@ -1,7 +1,14 @@
 @import '../rules/colors.less';
 
+.cardContainer {}
+
 .card {
+  display: inline-block;
+}
+
+.cardContent {
   margin: 10px;
+  cursor: pointer;
 }
 
 .coverContainer {
@@ -18,4 +25,88 @@
   background-size: cover;
   background-position: center;
   transition: all .1s
+}
+
+.info::after {
+  content: '';
+  display: block;
+  border-bottom: 1px solid #000;
+  opacity: .4;
+}
+
+.title {
+  font-size: 1.2em;
+  padding: 11px 16px 5px;
+}
+
+.description {
+  padding: 0 16px 11px;
+  font-size: 1em;
+  opacity: .6;
+}
+
+.hiddenDescription .description {
+  display: none;
+}
+
+.item {
+  height: 30px;
+  padding: 16px;
+  position: relative;
+}
+
+.author {
+  width: 100%;
+  float: left;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.authorName {
+  display: inline-block;
+  line-height: 30px;
+  vertical-align: top;
+  margin-left: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record {
+  float: left;
+  margin-left: -100px;
+  opacity: .6;
+}
+
+.record svg {
+  height: 1em;
+  width: 1em;
+  margin-right: .5em;
+}
+
+.hits {
+  display: inline-block;
+  line-height: 30px;
+  margin-right: .5em;
+}
+
+.hiddenHits .hits {
+  display: none;
+}
+
+.comments {
+  display: inline-block;
+  line-height: 30px;
+  font-size: 1em;
+}
+
+.hiddenComments .comments {
+  display: none;
 }

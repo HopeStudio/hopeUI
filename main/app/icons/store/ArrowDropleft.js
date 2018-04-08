@@ -2,7 +2,7 @@ import React from "react";
 import $ from "jQuery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
-class ArrowDropleft extends React.Component {
+class ArrowDropLeft extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -37,4 +37,4 @@ class ArrowDropleft extends React.Component {
     );
   }
 }
-export default ArrowDropleft;
+export default ArrowDropLeft;

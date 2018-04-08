@@ -2,7 +2,7 @@ import React from "react";
 import $ from "jQuery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
-class ArrowDropup extends React.Component {
+class ArrowDropUp extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -37,4 +37,4 @@ class ArrowDropup extends React.Component {
     );
   }
 }
-export default ArrowDropup;
+export default ArrowDropUp;

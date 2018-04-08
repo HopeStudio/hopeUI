@@ -17,6 +17,9 @@ import Alert from './store/Alert.js';
 import CirBlank from './store/CirBlank.js';
 import CirSelect from './store/CirSelect.js';
 
+import Browse from './store/Browse.js';
+import Comments from './store/Comments.js';
+
 export {
   ArrowDown,
   ArrowUp,
@@ -32,5 +35,7 @@ export {
   ArrowDropRightCircle,
   Alert,
   CirBlank,
-  CirSelect
-}
+  CirSelect,
+  Browse,
+  Comments
+};

@@ -2,7 +2,7 @@ import React from "react";
 import $ from "jQuery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
-class ArrowDropdownCircle extends React.Component {
+class ArrowDropDownCircle extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -37,4 +37,4 @@ class ArrowDropdownCircle extends React.Component {
     );
   }
 }
-export default ArrowDropdownCircle;
+export default ArrowDropDownCircle;
