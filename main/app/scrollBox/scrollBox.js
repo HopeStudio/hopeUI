@@ -372,7 +372,7 @@ class ScrollBox extends React.Component {
     this.setStyle();
   }
   render() {
-    const {alwaysVisible, enableSleep, wheelStep, touchScrollStep, children} = this.props;
+    const {alwaysVisible, wheelStep, touchScrollStep, children} = this.props;
     return (
       <div
         onMouseEnter={this.mouseEnterHandle}
@@ -419,14 +419,11 @@ ScrollBox.propTypes = {
   railOpacity: PropTypes.number,
   // 是否始终可见
   alwaysVisible: PropTypes.bool,
-  // 是否睡眠
-  enableSleep: PropTypes.bool,
   // 滚轮最大滚动距离
   stepMax: PropTypes.number,
   // 滚轮最大节流时间
   throttleMax: PropTypes.number,
-  // 手势滑动距离
-  touchScrollStep: PropTypes.number,
+  // 滚动贝塞尔曲线
   cubicBezier: PropTypes.string,
   // 滑动块圆角
   barRadius: PropTypes.string,
@@ -448,7 +445,6 @@ ScrollBox.defaultProps = {
   barOpacity: 0.8,
   railOpacity: 1,
   alwaysVisible: false,
-  enableSleep: true,
   stepMax: 30,
   throttleMax: 100,
   cubicBezier: 'cubic-bezier(.15,.27,0,1)',

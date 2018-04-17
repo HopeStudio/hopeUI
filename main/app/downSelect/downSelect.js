@@ -154,8 +154,6 @@ DownSelect.propTypes = {
   isMultiple: PropTypes.bool,
   // 是否可填写
   isInput: PropTypes.bool,
-  // 是否自动识别
-  ableAutoComplete: PropTypes.bool,
   // 数据
   data: PropTypes.object.isRequired,
   // 默认选中的数据键组
