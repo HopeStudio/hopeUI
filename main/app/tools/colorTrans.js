@@ -12,7 +12,7 @@ export default(styleObj, className) => {
         o[j] = {};
       if (typeof obj[i] !== 'object') {
         if (typeof obj[i] === 'string') {
-          const colorArr = obj[i].match(/^\w+\d0{1,2}$/);
+          const colorArr = obj[i].match(/\w+\d0{1,2}/);
           if (colorArr instanceof Array) {
             colorArr.forEach((item) => {
               obj[i] = obj[i].replace(item, colors[item]);
