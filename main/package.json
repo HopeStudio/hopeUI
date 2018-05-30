@@ -6,12 +6,14 @@
   "scripts": {
     "pack": "webpack --config webpack.config.js --watch",
     "start": "webpack-dev-server",
-    "svgIcon": "svgr -d app/icons/store app/icons/source --template app/icons/template.js"
+    "svgIcon": "svgr -d app/icons/store app/icons/source --template app/icons/template.js",
+    "lint": "eslint app --ignore-path path::app/icons/store"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
@@ -21,8 +23,15 @@
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
     "css-loader": "^0.28.10",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.8.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.0.6",
+    "jquery": "^3.3.1",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "postcss": "^6.0.19",
