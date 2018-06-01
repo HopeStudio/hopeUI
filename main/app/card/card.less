@@ -1,7 +1,5 @@
 @import '../rules/colors.less';
 
-.cardContainer {}
-
 .card {
   display: inline-block;
 }
@@ -9,14 +7,23 @@
 .cardContent {
   margin: 10px;
   cursor: pointer;
+  transition: all .2s;
 }
 
 .coverContainer {
   overflow: hidden;
 }
 
-.coverBorder {
-  margin: 16px 16px 0;
+.coverBorder .coverContainer {
+  margin: 0 16px 0;
+}
+
+.coverBorder .coverContainer::before {
+  content: '';
+  height: 0;
+  width: 100%;
+  display: block;
+  height: 16px;
 }
 
 .cover {
@@ -24,14 +31,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  transition: all .1s
-}
-
-.info::after {
-  content: '';
-  display: block;
-  border-bottom: 1px solid #000;
-  opacity: .4;
+  transition: all .2s
 }
 
 .title {
@@ -53,6 +53,11 @@
   height: 30px;
   padding: 16px;
   position: relative;
+  border-top: 1px solid #000;
+}
+
+.hiddenItem .item {
+  display: none;
 }
 
 .author {
@@ -64,9 +69,14 @@
   width: 30px;
   height: 30px;
   display: inline-block;
+  overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+.roundAvatar .avatar {
+  border-radius: 50%;
 }
 
 .authorName {
@@ -91,22 +101,34 @@
   margin-right: .5em;
 }
 
+.hits, .comments {
+  float: right;
+}
+
 .hits {
-  display: inline-block;
-  line-height: 30px;
-  margin-right: .5em;
+  margin-left: .5em;
 }
 
 .hiddenHits .hits {
   display: none;
 }
 
-.comments {
-  display: inline-block;
-  line-height: 30px;
-  font-size: 1em;
-}
-
 .hiddenComments .comments {
   display: none;
+}
+
+.PicZoom .card:hover .cover {
+  transform: scale(1.1);
+}
+
+.PicBrighten .card:hover .cover {
+  opacity: .8;
+}
+
+.Float .card:hover .cardContent {
+  transform: translate(-5px, -5px);
+}
+
+.Shadow .card:hover .cardContent {
+  box-shadow: 3px 3px 2px rgba(0, 0, 0, .2);
 }
