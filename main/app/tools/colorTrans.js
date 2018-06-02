@@ -5,7 +5,7 @@ export default(styleObj, className) => {
   const id = uuid(8);
   let o = [],
     j = 0;
-  const isColor = /\w*\d0{1,2}/;
+  const isColor = /\w+\d0{1,2}/;
   const doit = (obj, name) => {
     for (let i in obj) {
       if (typeof o[j] !== 'object') 
