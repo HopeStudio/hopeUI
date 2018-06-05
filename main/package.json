@@ -7,7 +7,8 @@
     "pack": "webpack --config webpack.config.js --watch",
     "start": "webpack-dev-server",
     "svgIcon": "svgr -d app/icons/store app/icons/source --template app/icons/template.js",
-    "lint": "eslint app --ignore-path path::app/icons/store"
+    "lint": "eslint app --ignore-path path::app/icons/store",
+    "test": "karma start --single-run"
   },
   "author": "",
   "license": "ISC",
@@ -21,8 +22,10 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-runtime": "^6.26.0",
-    "classnames": "^2.2.5",
+    "chai": "^4.1.2",
     "css-loader": "^0.28.10",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -31,21 +34,31 @@
     "eslint-plugin-react": "^7.8.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.0.6",
-    "jquery": "^3.3.1",
+    "karma": "^2.0.2",
+    "karma-cli": "^1.0.1",
+    "karma-coverage": "^1.1.2",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-spec-reporter": "^0.0.32",
+    "karma-webpack": "^3.0.0",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
+    "mocha": "^5.2.0",
     "postcss": "^6.0.19",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.1",
-    "prop-types": "^15.6.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
     "style-loader": "^0.20.2",
     "svgr": "^1.9.0",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^3.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "jquery": "^3.3.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
 }

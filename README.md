@@ -9,9 +9,10 @@
 ### 流程说明
 
 1. fork 到自己名下
-2. 本地开发并自行测试
-3. 发 pull request 到 `master` 分支
-4. 关注结果反馈
+2. 本地开发组件
+3. 编写测试文件 *.spec.js 并测试
+4. 发 pull request 到 `master` 分支
+5. 关注结果反馈
 
 ### 本地开发
 ```bash
@@ -50,7 +51,10 @@ $ npm run lint
 ```
 
 ### 测试
-暂无测试流程
+```bash
+$ npm run test
+```
+代码覆盖率报告将以 html 形式生成在 coverage/ 中
 
 ### 添加矢量图标
 
