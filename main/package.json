@@ -8,13 +8,15 @@
     "start": "webpack-dev-server",
     "svgIcon": "svgr -d app/icons/store app/icons/source --template app/icons/template.js",
     "lint": "eslint app --ignore-path path::app/icons/store",
-    "test": "karma start --single-run"
+    "test": "jest",
+    "testCoverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
@@ -22,7 +24,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-runtime": "^6.26.0",
-    "chai": "^4.1.2",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -34,20 +35,15 @@
     "eslint-plugin-react": "^7.8.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.0.6",
-    "karma": "^2.0.2",
-    "karma-cli": "^1.0.1",
-    "karma-coverage": "^1.1.2",
-    "karma-mocha": "^1.3.0",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-spec-reporter": "^0.0.32",
-    "karma-webpack": "^3.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^23.1.0",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
-    "mocha": "^5.2.0",
     "postcss": "^6.0.19",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.1",
+    "regenerator-runtime": "^0.11.1",
     "style-loader": "^0.20.2",
     "svgr": "^1.9.0",
     "webpack": "^4.1.1",
@@ -60,5 +56,23 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+    },
+    "collectCoverageFrom": [
+      "app/**/*.js"
+    ],
+    "coverageDirectory": "coverage",
+    "setupFiles": ["<rootDir>/test/enzyme.setup.js"]
   }
 }

@@ -51,10 +51,15 @@ $ npm run lint
 ```
 
 ### 测试
+测试
 ```bash
 $ npm run test
 ```
-代码覆盖率报告将以 html 形式生成在 coverage/ 中
+测试并生成覆盖率报告
+```bash
+$ npm run testCoverage
+```
+代码覆盖率报告将以 html 形式生成在 coverage/icov-report 中
 
 ### 添加矢量图标
 
