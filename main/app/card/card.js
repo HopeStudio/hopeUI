@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import $ from 'jQuery';
+import $ from 'jquery';
 
 import cssCard from './card.less';
 import uuid from '../tools/uuid';
@@ -59,9 +59,8 @@ class Card extends React.Component {
   setStyle() {
     const {
       fontColor,
-      mainColor,
-      anxiliaryColor,
-      embellishmentColor,
+      backgroundColor,
+      lineColor,
       coverRatio,
     } = this.props;
 
@@ -69,25 +68,17 @@ class Card extends React.Component {
 
     // 设置边框颜色
     styleId.push(colorTrans(
-      { 'border-color': anxiliaryColor },
+      { 'border-color': lineColor },
       `.cardContainer-${this.uuid} .${cssCard.item}`,
     ));
 
     // 设置背景色
     styleId.push(colorTrans(
       {
-        background: mainColor,
+        background: backgroundColor,
         color: fontColor,
       },
       `.cardContainer-${this.uuid} .${cssCard.cardContent}`,
-    ));
-
-    // 设置 hover 样式
-    styleId.push(colorTrans(
-      {
-        color: embellishmentColor,
-      },
-      `.cardContainer-${this.uuid} .${cssCard.cardContent}:hover .${cssCard.title}`,
     ));
 
     // 设置封面图片长宽比
@@ -109,6 +100,7 @@ class Card extends React.Component {
 
   render() {
     const {
+      id,
       data,
       className: propClassName,
       showAuthor,
@@ -122,10 +114,12 @@ class Card extends React.Component {
 
     return (
       <div
+        id={id}
         className={
           classnames(
             propClassName,
             cssCard.cardContainer,
+            'cardContainer',
             `cardContainer-${this.uuid}`,
             {
               [cssCard.hiddenDescription]: !description,
@@ -181,11 +175,12 @@ const hoverEffect = PropTypes.oneOf([
 ]);
 
 Card.propTypes = {
+  id: PropTypes.string,
   className: PropTypes.string,
   // 数据
   data: PropTypes.arrayOf(itemData),
   // 列数
-  columns: PropTypes.number.isRequired,
+  columns: PropTypes.number,
   // 最小卡片宽度
   minWidth: PropTypes.number,
   // 封面纵横比
@@ -194,8 +189,6 @@ Card.propTypes = {
   hover: PropTypes.arrayOf(hoverEffect),
   // 是否显示作者栏
   showAuthor: PropTypes.bool,
-  // 字体颜色
-  fontColor: PropTypes.string,
   // 封面图片是否受内边距限制
   coverBorder: PropTypes.bool,
   // 是否将头像裁剪为圆形
@@ -206,18 +199,20 @@ Card.propTypes = {
   hits: PropTypes.bool,
   // 是否显示评论数
   comments: PropTypes.bool,
-  // 主色
-  mainColor: PropTypes.string,
-  // 辅助色
-  anxiliaryColor: PropTypes.string,
-  // 点缀色
-  embellishmentColor: PropTypes.string,
+  // 字体颜色
+  fontColor: PropTypes.string,
+  // 背景颜色
+  backgroundColor: PropTypes.string,
+  // 线条颜色
+  lineColor: PropTypes.string,
 };
 
 Card.defaultProps = {
+  id: '',
   className: '',
+  columns: 4,
   data: [],
-  minWidth: 215,
+  minWidth: 225,
   coverRatio: 0.75,
   hover: ['Float', 'Shadow'],
   fontColor: 'black',
@@ -227,9 +222,8 @@ Card.defaultProps = {
   description: false,
   hits: false,
   comments: false,
-  mainColor: 'white',
-  anxiliaryColor: 'orange500',
-  embellishmentColor: 'orange900',
+  backgroundColor: 'white',
+  lineColor: 'orange500',
 };
 
 export default Card;

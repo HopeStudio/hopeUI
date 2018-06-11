@@ -19,32 +19,32 @@ function CardItem(props) {
   } = props;
 
   return (
-    <div className={classnames(cssCard.card, `card-${uuid}`)}>
-      <div className={cssCard.cardContent}>
-        <div className={cssCard.coverContainer}>
+    <div className={classnames(cssCard.card, 'card', `card-${uuid}`)}>
+      <div className={classnames(cssCard.cardContent, 'cardContent')}>
+        <div className={classnames(cssCard.coverContainer, 'coverContainer')}>
           <div
-            className={cssCard.cover}
+            className={classnames(cssCard.cover, 'cover')}
             style={{ backgroundImage: `url("${cover}")` }}
           />
         </div>
-        <div className={cssCard.info}>
-          <div className={cssCard.title}>{title}</div>
-          <div className={cssCard.description}>{description}</div>
+        <div className={classnames(cssCard.info, 'info')}>
+          <div className={classnames(cssCard.title, 'title')}>{title}</div>
+          <div className={classnames(cssCard.description, 'description')}>{description}</div>
         </div>
-        <div className={cssCard.item}>
-          <div className={cssCard.author}>
+        <div className={classnames(cssCard.item, 'item')}>
+          <div className={classnames(cssCard.author, 'author')}>
             <div
-              className={cssCard.avatar}
+              className={classnames(cssCard.avatar, 'avatar')}
               style={{ backgroundImage: `url(${avatar})` }}
             />
-            <div className={cssCard.authorName}>{author}</div>
+            <div className={classnames(cssCard.authorName, 'authorName')}>{author}</div>
           </div>
-          <div className={cssCard.record}>
-            <div className={cssCard.hits}>
+          <div className={classnames(cssCard.record, 'record')}>
+            <div className={classnames(cssCard.hits, 'hits')}>
               <Browse />
               {hits}
             </div>
-            <div className={cssCard.comments}>
+            <div className={classnames(cssCard.comments, 'comments')}>
               <Comments />
               {comments}
             </div>
