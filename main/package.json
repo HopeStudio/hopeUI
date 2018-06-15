@@ -73,6 +73,6 @@
       "app/**/*.js"
     ],
     "coverageDirectory": "coverage",
-    "setupFiles": ["<rootDir>/test/enzyme.setup.js"]
+    "setupFiles": ["jest-canvas-mock", "<rootDir>/test/enzyme.setup.js"]
   }
 }

@@ -23,11 +23,15 @@ function toHue(hueColor) {
 class HuePick extends React.Component {
   state = { hue: toHue(this.props.hueColor) }
 
+  componentWillReceiveProps({ hueColor }) {
+    const hue = toHue(hueColor);
+    this.setState({ hue });
+  }
+
   shouldComponentUpdate() {
     const { hueColor } = this.props;
     const hue = toHue(hueColor);
     if (this.state.hue - hue === 1) return false;
-    this.state.hue = hue;
     return true;
   }
 

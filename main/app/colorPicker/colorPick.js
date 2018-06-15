@@ -95,6 +95,14 @@ class ColorPick extends React.Component {
     ...toXY(this.color),
   }
 
+  componentWillReceiveProps({ color }) {
+    const newColor = parseColor(color);
+    this.setState({
+      hueColor: toHueColor(newColor),
+      ...toXY(newColor),
+    });
+  }
+
   uuid = uuid(8);
 
   handlePaletteChange = this::(function handlePaletteChange(x, y) {

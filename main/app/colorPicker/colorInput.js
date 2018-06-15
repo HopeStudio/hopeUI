@@ -10,8 +10,8 @@ const rgbReg = /^rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\d+\s*)?\)$/i;
 const hexReg = /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/i;
 
 function toHex([r, g, b]) {
-  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}` +
-    `${b.toString(16).padStart(2, '0')}`;
+  return (`#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}` +
+    `${b.toString(16).padStart(2, '0')}`).toUpperCase();
 }
 
 function parseColor(colorStr) {
@@ -55,6 +55,15 @@ class ColorInput extends React.Component {
     let color = [...this.props.color];
     const { onChange } = this.props;
     const key = e.target.name;
+    if (key === 'Hex') {
+      const { value } = e.target;
+      if (!hexReg.test(value)) {
+        return onChange(color);
+      }
+      color = parseColor(value);
+      onChange(color);
+      return true;
+    }
     let value = parseInt(e.target.value, 10) || 0;
     if (value > 255) value = 255;
     if (value < 0) value = 0;
@@ -67,12 +76,6 @@ class ColorInput extends React.Component {
         break;
       case 'B':
         color[2] = value;
-        break;
-      case 'Hex':
-        if (!hexReg.test(color)) {
-          return onChange(color);
-        }
-        color = parseColor(value);
         break;
       default:
         break;
