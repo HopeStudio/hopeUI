@@ -1,4 +1,3 @@
-
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -42,12 +41,12 @@ function toHueColor(color) {
   if (typeof color === 'number') {
     const block = parseInt(color * 6, 10);
     switch (block) {
-      case 0: return [255, 0, parseInt(((color * 6) - block) * 255, 10)];
-      case 1: return [255 - (parseInt(((color * 6) - block) * 255, 10)), 0, 255];
-      case 2: return [0, parseInt(((color * 6) - block) * 255, 10), 255];
-      case 3: return [0, 255, 255 - (parseInt(((color * 6) - block) * 255, 10))];
-      case 4: return [parseInt(((color * 6) - block) * 255, 10), 255, 0];
-      case 5: return [255, 255 - (parseInt(((color * 6) - block) * 255, 10)), 0];
+      case 0: return [255, 0, Math.round(((color * 6) - block) * 255)];
+      case 1: return [255 - (Math.round(((color * 6) - block) * 255)), 0, 255];
+      case 2: return [0, Math.round(((color * 6) - block) * 255), 255];
+      case 3: return [0, 255, 255 - (Math.round(((color * 6) - block) * 255))];
+      case 4: return [Math.round(((color * 6) - block) * 255), 255, 0];
+      case 5: return [255, 255 - (Math.round(((color * 6) - block) * 255)), 0];
       default: return [255, 0, 0];
     }
   }
@@ -57,7 +56,7 @@ function toHueColor(color) {
 
   let hueColor;
   if (saturation > 0) {
-    hueColor = color.map(value => parseInt((value - lightness) / saturation, 10));
+    hueColor = color.map(value => Math.round((value - lightness) / saturation));
   } else {
     hueColor = [255, 0, 0];
   }
@@ -66,12 +65,20 @@ function toHueColor(color) {
 
 function toRGB(hueColor, x, y) {
   return hueColor
-    .map(value => parseInt((value + ((255 - value) * (1 - x))) * (1 - y), 10));
+    .map(value => Math.round((value + ((255 - value) * (1 - x))) * (1 - y)));
 }
 
 function toXY([R, G, B]) {
   const [r, g, b] = toHueColor([R, G, B]);
   if (g === 255) {
+    if (r === 255) {
+      if (b === 255) {
+        return { x: 0, y: 0 };
+      }
+      const x = (255 * (B - G)) / (G * (b - 255));
+      const y = 1 - (G / 255);
+      return { x, y };
+    }
     const x = (255 * (R - G)) / (G * (r - 255));
     const y = 1 - (G / 255);
     return { x, y };
