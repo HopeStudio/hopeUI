@@ -1,8 +1,8 @@
 import React from "react";
-import $ from "jQuery";
+import $ from "jquery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
-class ArrowDropRightCircle extends React.Component {
+class ArrowDropRight extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -31,10 +31,10 @@ class ArrowDropRightCircle extends React.Component {
         <path
           ref={path => (this.path = path)}
           fill="#333"
-          d="M512 928c229.75 0 416-186.25 416-416S741.75 96 512 96 96 282.25 96 512s186.25 416 416 416zm-64-224V320l192 192-192 192z"
+          d="M384 256l256 256-256 256z"
         />
       </svg>
     );
   }
 }
-export default ArrowDropRightCircle;
+export default ArrowDropRight;

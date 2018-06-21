@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import $ from 'jQuery';
+import $ from 'jquery';
 
 import colors from '../rules/colors.js';
 import cssBtn from './btnTypes.less';
@@ -10,7 +10,7 @@ import colorTrans from '../tools/colorTrans.js';
 
 class Button extends React.Component {
   setStyle() {
-    const {customStyle} = this.props;
+    const { customStyle } = this.props;
     colorTrans(customStyle, `.hope-button.${this.uuid}`);
   }
   componentWillMount() {
@@ -23,17 +23,18 @@ class Button extends React.Component {
     this.setStyle();
   }
   render() {
-    const {type, content, icon, className: propClassName} = this.props;
-    const Icon = icon
-      ? icon
-      : '';
+    const { 
+type, content, icon, className: propClassName 
+} = this.props;
+    const Icon = icon || '';
     return (
       <div
-        className={classnames('hope-button', propClassName, cssBtn[type], this.uuid)}>
+        className={classnames('hope-button', propClassName, cssBtn[type], this.uuid)}
+      >
         <span>{content}</span>
         {Icon}
       </div>
-    )
+    );
   }
 }
 
@@ -45,12 +46,12 @@ Button.propTypes = {
   // 按钮文本
   content: PropTypes.string.isRequired,
   // 按钮Icon
-  icon: PropTypes.object
-}
+  icon: PropTypes.object,
+};
 
 Button.defaultProps = {
   type: 'activate',
-  customStyle: {}
-}
+  customStyle: {},
+};
 
 export default Button;

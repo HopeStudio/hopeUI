@@ -1,8 +1,8 @@
 import React from "react";
-import $ from "jQuery";
+import $ from "jquery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
-class Alert extends React.Component {
+class ArrowDropDownCircle extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -31,10 +31,10 @@ class Alert extends React.Component {
         <path
           ref={path => (this.path = path)}
           fill="#333"
-          d="M512 96C283.2 96 96 283.202 96 512s187.2 416 416 416 416-187.202 416-416S740.8 96 512 96zm48 624h-96v-80h96v80zm0-176h-96V288h96v256z"
+          d="M512 96C282.25 96 96 282.25 96 512s186.25 416 416 416 416-186.25 416-416S741.75 96 512 96zm0 544L320 448h384L512 640z"
         />
       </svg>
     );
   }
 }
-export default Alert;
+export default ArrowDropDownCircle;

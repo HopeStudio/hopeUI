@@ -45,15 +45,12 @@ describe('取色器组件', () => {
     expect(root.find('.hexInput').instance().value).toEqual('#CB4A40');
 
     root.find('.paletteMain').simulate('mousedown', { clientX: 100, clientY: 100 });
-    expect(root.find('.hexInput').instance().value).toEqual('#7F5855');
+    expect(root.find('.hexInput').instance().value).toEqual('#805855');
 
     root.find('.paletteMain').simulate('mousemove', { clientX: 50, clientY: 50 });
-    expect(root.find('.hexInput').instance().value).toEqual('#BFA19F');
+    expect(root.find('.hexInput').instance().value).toEqual('#BFA29F');
 
-    root.find('.hue').simulate('mousedown', 200);
-    expect(root.find('.hexInput').instance().value).toEqual('#BF9F9F');
-
-    root.find('.hue').simulate('mousemove', 0);
+    root.find('.hue').simulate('mousedown', { clientY: 200 });
     expect(root.find('.hexInput').instance().value).toEqual('#BF9F9F');
 
     root.setProps({ color: '#F00' });
@@ -61,8 +58,9 @@ describe('取色器组件', () => {
   });
 
   it('色相测试', () => {
+    root.find('.hue').simulate('mousedown', { clientY: 100 });
     const hueProps = root.find('HuePick').props();
     const hueRoot = mount(<ColorPick.HuePick {...hueProps} />);
-    expect(hueRoot.state().hue).toEqual(0);
+    expect(hueRoot.state().hue).toEqual(0.5);
   });
 });

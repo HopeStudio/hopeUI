@@ -1,16 +1,16 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import $ from 'jQuery';
+import $ from 'jquery';
 
 import colors from '../rules/colors.js';
 import cssCheckTick from './checkTick.less';
-import {CirBlank, CirSelect} from '../icons/export.js';
+import { CirBlank, CirSelect } from '../icons/export.js';
 import uuid from '../tools/uuid.js';
 
 class CheckTick extends React.Component {
   state = {
-    isChecked: this.props.isChecked
+    isChecked: this.props.isChecked,
   };
   componentWillMount() {
     this.type = this.props.isMultiple
@@ -19,29 +19,29 @@ class CheckTick extends React.Component {
     this.uuid = uuid(5);
   }
   componentDidMount() {
-    $(this.input).data('check', this.setChecked.bind(this))
-    this.setChecked(this.props.isChecked)
+    $(this.input).data('check', this.setChecked.bind(this));
+    this.setChecked(this.props.isChecked);
   }
   setChecked(checked) {
-    const {disabled} = this.props;
-    if (disabled) 
-      return;
+    const { disabled } = this.props;
+    if (disabled)
+      {return;}
     let isChecked;
     if (typeof checked === 'boolean') {
       isChecked = checked;
     } else {
-      isChecked = !this.state.isChecked
+      isChecked = !this.state.isChecked;
     }
     this.setState({
-      isChecked
-    }, () => this.changeCall())
+      isChecked,
+    }, () => this.changeCall());
     return isChecked;
   }
-  changeHandle = e => {
-    const {disabled} = this.props;
-    if (disabled) 
-      return;
-    const {name, value} = this.props;
+  changeHandle = (e) => {
+    const { disabled } = this.props;
+    if (disabled)
+      {return;}
+    const { name, value } = this.props;
     $(`input[name=${name}][type=${this.type}]`).each((i, item) => {
       const setChecked = $(item).data('check');
       if (e.target === item) {
@@ -51,10 +51,10 @@ class CheckTick extends React.Component {
       if (this.type === 'radio') {
         setChecked(false);
       }
-    })
+    });
   }
   changeCall() {
-    const {onChange, value} = this.props;
+    const { onChange, value } = this.props;
     onChange(value, this.state.isChecked);
   }
   render() {
@@ -68,14 +68,10 @@ class CheckTick extends React.Component {
       isChecked,
       disabled,
       value,
-      name
+      name,
     } = this.props;
-    const NormalIcon = normalIcon
-      ? normalIcon
-      : '';
-    const CheckedIcon = checkedIcon
-      ? checkedIcon
-      : '';
+    const NormalIcon = normalIcon || '';
+    const CheckedIcon = checkedIcon || '';
     const normalClass = this.state.isChecked
       ? 'normalIconOff'
       : 'normalIconOn';
@@ -93,11 +89,12 @@ class CheckTick extends React.Component {
       : '';
     const disabledBox = disabled
       ? 'checkTick-disabled'
-      : ''
+      : '';
     return (
       <div
         className={classnames(propClassName, cssCheckTick.checkTick, cssCheckTick[disabledBox])}
-        key={this.uuid}>
+        key={this.uuid}
+      >
         <label className={classnames(cssCheckTick.label)}>
           <input
             className={classnames(cssCheckTick.input)}
@@ -105,13 +102,16 @@ class CheckTick extends React.Component {
             type={this.type}
             name={name}
             value={value}
-            onChange={this.changeHandle}/>
+            onChange={this.changeHandle} 
+          />
           <div
-            className={classnames(cssCheckTick[normalClass], cssCheckTick[disabledAnti])}>
+            className={classnames(cssCheckTick[normalClass], cssCheckTick[disabledAnti])}
+          >
             {NormalIcon}
           </div>
           <div
-            className={classnames(cssCheckTick[checkedClass], cssCheckTick[disabledAnti])}>
+            className={classnames(cssCheckTick[checkedClass], cssCheckTick[disabledAnti])}
+          >
             {CheckedIcon}
           </div>
           <div className={classnames(cssCheckTick[disabledClass])}>
@@ -120,7 +120,7 @@ class CheckTick extends React.Component {
           <span className={classnames(cssCheckTick.text, cssCheckTick[disabledText])}>{children}</span>
         </label>
       </div>
-    )
+    );
   }
 }
 
@@ -142,17 +142,17 @@ CheckTick.propTypes = {
   // 单个TICK变化后的回调
   onChange: PropTypes.func,
   // 是否禁用
-  disabled: PropTypes.bool
-}
+  disabled: PropTypes.bool,
+};
 
 CheckTick.defaultProps = {
-  normalIcon: <CirBlank/>,
-  checkedIcon: <CirSelect fillcolor='blue300'/>,
-  disabledIcon: <CirBlank fillcolor='grey500'/>,
+  normalIcon: <CirBlank />,
+  checkedIcon: <CirSelect fillcolor="blue300" />,
+  disabledIcon: <CirBlank fillcolor="grey500" />,
   isChecked: false,
   isMultiple: false,
   onChange: (value, checked) => {},
-  disabled: false
-}
+  disabled: false,
+};
 
 export default CheckTick;

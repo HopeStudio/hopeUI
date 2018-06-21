@@ -1,8 +1,8 @@
 import React from "react";
-import $ from "jQuery";
+import $ from "jquery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
-class ArrowLeft extends React.Component {
+class ArrowDropUp extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -31,10 +31,10 @@ class ArrowLeft extends React.Component {
         <path
           ref={path => (this.path = path)}
           fill="#333"
-          d="M854 469.25H334.592l239.404-239.404L512 170 170 512l342 342 59.844-59.848L334.592 554.75H854v-85.5z"
+          d="M256 640l256-256 256 256z"
         />
       </svg>
     );
   }
 }
-export default ArrowLeft;
+export default ArrowDropUp;

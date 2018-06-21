@@ -1,5 +1,5 @@
 import React from "react";
-import $ from "jQuery";
+import $ from "jquery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
 class ArrowDropLeftCircle extends React.Component {

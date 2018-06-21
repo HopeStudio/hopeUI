@@ -1,8 +1,8 @@
 import React from "react";
-import $ from "jQuery";
+import $ from "jquery";
 import iconCSS from "../icon.less";
 import colors from "../../rules/colors.js";
-class ArrowUp extends React.Component {
+class CirBlank extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -23,18 +23,18 @@ class ArrowUp extends React.Component {
       <svg
         ref={svg => (this.svg = svg)}
         className="icon"
+        viewBox="0 0 1024 1024"
         width={props.size ? props.size : "20px"}
         height={props.size ? props.size : "20px"}
-        viewBox="0 0 1024 1024"
         {...props}
       >
+        <defs />
         <path
           ref={path => (this.path = path)}
-          fill="#333"
-          d="M554.75 854V334.592l239.404 239.404L854 512 512 170 170 512l59.848 59.844L469.25 334.592V854h85.5z"
+          d="M512 960C264.96 960 64 759.04 64 512S264.96 64 512 64s448 200.96 448 448-200.96 448-448 448zm0-832c-211.744 0-384 172.256-384 384s172.256 384 384 384 384-172.256 384-384-172.256-384-384-384z"
         />
       </svg>
     );
   }
 }
-export default ArrowUp;
+export default CirBlank;

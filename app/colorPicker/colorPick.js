@@ -41,12 +41,12 @@ function toHueColor(color) {
   if (typeof color === 'number') {
     const block = parseInt(color * 6, 10);
     switch (block) {
-      case 0: return [255, 0, Math.round(((color * 6) - block) * 255)];
-      case 1: return [255 - (Math.round(((color * 6) - block) * 255)), 0, 255];
-      case 2: return [0, Math.round(((color * 6) - block) * 255), 255];
-      case 3: return [0, 255, 255 - (Math.round(((color * 6) - block) * 255))];
-      case 4: return [Math.round(((color * 6) - block) * 255), 255, 0];
-      case 5: return [255, 255 - (Math.round(((color * 6) - block) * 255)), 0];
+      case 0: return [255, 0, ((color * 6) - block) * 255];
+      case 1: return [255 - (((color * 6) - block) * 255), 0, 255];
+      case 2: return [0, ((color * 6) - block) * 255, 255];
+      case 3: return [0, 255, 255 - (((color * 6) - block) * 255)];
+      case 4: return [((color * 6) - block) * 255, 255, 0];
+      case 5: return [255, 255 - (((color * 6) - block) * 255), 0];
       default: return [255, 0, 0];
     }
   }
@@ -56,7 +56,7 @@ function toHueColor(color) {
 
   let hueColor;
   if (saturation > 0) {
-    hueColor = color.map(value => Math.round((value - lightness) / saturation));
+    hueColor = color.map(value => (value - lightness) / saturation);
   } else {
     hueColor = [255, 0, 0];
   }

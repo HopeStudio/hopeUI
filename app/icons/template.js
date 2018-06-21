@@ -1,15 +1,13 @@
 module.exports = (opts = {}) => {
-  const strFunc = (str) => {
-    return '`${' + str + '}`'
-  }
+  const strFunc = str => `\`\${${str}}\``;
   return (code, state) => {
     code = code
       .replace(/<svg/, '<svg ref={svg => this.svg = svg} ')
       .replace(/<path/, '<path ref={path => this.path = path} ')
       .replace(/width={[\w|\W]*?}/, 'width={props.size ? props.size : "20px"}')
-      .replace(/height={[\w|\W]*?}/, 'height={props.size ? props.size : "20px"}')
+      .replace(/height={[\w|\W]*?}/, 'height={props.size ? props.size : "20px"}');
     return (`import React from 'react';
-    import $ from 'jQuery';
+    import $ from 'jquery';
       import iconCSS from '../icon.less';
       import colors from '../../rules/colors.js';
       class ${state.componentName} extends React.Component{
@@ -27,6 +25,6 @@ module.exports = (opts = {}) => {
           return (${code})
         }
       }
-      export default ${state.componentName}`)
-  }
-}
+      export default ${state.componentName}`);
+  };
+};

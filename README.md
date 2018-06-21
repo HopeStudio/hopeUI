@@ -1,4 +1,6 @@
 # HopeUI
+[![](https://travis-ci.com/HopeStudio/hopeUI.svg?branch=master)](https://travis-ci.com/HopeStudio/hopeUI)
+
 基于 react 的 UI 组件库
 
 ## 安装
