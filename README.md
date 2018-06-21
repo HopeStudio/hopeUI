@@ -1,5 +1,6 @@
 # HopeUI
-[![](https://travis-ci.com/HopeStudio/hopeUI.svg?branch=master)](https://travis-ci.com/HopeStudio/hopeUI)
+[![Build Status](https://travis-ci.com/HopeStudio/hopeUI.svg?branch=master)](https://travis-ci.com/HopeStudio/hopeUI)
+[![Coverage Status](https://coveralls.io/repos/github/HopeStudio/hopeUI/badge.svg)](https://coveralls.io/github/HopeStudio/hopeUI)
 
 基于 react 的 UI 组件库
 
