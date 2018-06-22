@@ -1,9 +1,14 @@
 {
   "name": "hopeui",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "a front end UI lib made by HOPE studio",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "dist/index.js"
+  ],
   "scripts": {
+    "build": "webpack --config webpack.production.js",
     "pack": "webpack --config webpack.config.js --watch",
     "start": "webpack-dev-server",
     "svgIcon": "svgr -d app/icons/store app/icons/source --template app/icons/template.js",

@@ -4,8 +4,26 @@
 
 基于 react 的 UI 组件库
 
-## 安装
-目前未在 npm 发布，待工作流完善后进行发布。
+## 安装与使用
+```bash
+$ npm install hopeui --save
+```
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import HopeUI from 'hopeui';
+
+ReactDOM.render(
+  <link rel="text/stylesheet" href={HopeUI.css}/>,
+  document.getElementById('css')
+)
+
+ReactDOM.render(
+  <HopeUI.Button/>,
+  document.getElementById('root')
+)
+```
 
 ## 开发说明
 
@@ -20,8 +38,8 @@
 ### 本地开发
 ```bash
 $ git clone git@github.com:HopeStudio/hopeUI.git
-$ cd hopeUI/main
-$ npm install
+$ cd hopeUI
+$ npm install 
 $ npm start
 ```
 使用浏览器访问 http://localhost:8868 查看 demo
@@ -35,16 +53,17 @@ $ npm start
 │   │   └── export.js  # 图标组件导出文件
 │   ├── rules          # 基本 CSS 规则以及颜色规则
 │   ├── tools          # 工具函数
-│   ├── entry.js       # demo 入口文件
-│   └── hopeUI.html    # demo html 文件
+│   └── index.js       # 入口文件
 ├── dist               # 生成文件
 ├── lib                # 外部库
+├── demo               # 项目示例
+├── test               # 测试相关文件
 └── package.json
 ```
 
 ### 打包
 ```bash
-$ npm run pack
+$ npm run build
 ```
 
 ### lint

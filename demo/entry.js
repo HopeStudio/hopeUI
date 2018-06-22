@@ -1,19 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './rules/reset.less';
-import './rules/ripples.less';
-import Button from './button/button';
-import ScrollBox from './scrollBox/scrollBox';
-import CheckTick from './checkTick/checkTick';
-import DownSelect from './downSelect/downSelect';
-import Table from './table/table';
-import Text from './text/text';
-import Card from './card/card';
-import DatePick from './datePick/datePick';
-import ColorPick from './colorPicker/colorPick';
-
+import '../app/rules/reset.less';
+import '../app/rules/ripples.less';
 import {
+  Button,
+  Card,
+  CheckTick,
+  ColorPick,
+  DatePick,
+  DownSelect,
   ArrowDown,
   ArrowUp,
   ArrowLeft,
@@ -27,7 +23,10 @@ import {
   ArrowDropLeftCircle,
   ArrowDropRightCircle,
   Alert,
-} from './icons/export';
+  ScrollBox,
+  Table,
+  Text,
+} from '../app/index';
 
 /* eslint-disable react/prefer-stateless-function */
 class Hope extends React.Component {

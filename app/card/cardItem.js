@@ -16,6 +16,8 @@ function CardItem(props) {
     author,
     hits,
     comments,
+    defaultCover,
+    defaultAvatar,
   } = props;
 
   return (
@@ -24,7 +26,7 @@ function CardItem(props) {
         <div className={classnames(cssCard.coverContainer, 'coverContainer')}>
           <div
             className={classnames(cssCard.cover, 'cover')}
-            style={{ backgroundImage: `url("${cover}")` }}
+            style={{ backgroundImage: `url("${cover || defaultCover}")` }}
           />
         </div>
         <div className={classnames(cssCard.info, 'info')}>
@@ -35,7 +37,7 @@ function CardItem(props) {
           <div className={classnames(cssCard.author, 'author')}>
             <div
               className={classnames(cssCard.avatar, 'avatar')}
-              style={{ backgroundImage: `url(${avatar})` }}
+              style={{ backgroundImage: `url(${avatar || defaultAvatar})` }}
             />
             <div className={classnames(cssCard.authorName, 'authorName')}>{author}</div>
           </div>
@@ -71,12 +73,16 @@ CardItem.propTypes = {
   hits: PropTypes.number,
   // 评论数
   comments: PropTypes.number,
+  // 默认封面
+  defaultCover: PropTypes.string.isRequired,
+  // 默认头像
+  defaultAvatar: PropTypes.string.isRequired,
 };
 
 CardItem.defaultProps = {
   description: '',
-  cover: './dist/card/cover.jpg',
-  avatar: './dist/card/avatar.png',
+  cover: '',
+  avatar: '',
   author: '匿名',
   hits: 0,
   comments: 0,

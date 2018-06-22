@@ -6,11 +6,11 @@ const webpack = require('webpack');
 module.exports = {
   mode: 'development',
 
-  entry: path.resolve(__dirname, './app/entry.js'),
+  entry: path.resolve(__dirname, './demo/entry.js'),
 
   output: {
     filename: 'hopeUI.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'demo/dist'),
     library: 'hopeUI',
     libraryTarget: 'umd',
   },
@@ -18,45 +18,39 @@ module.exports = {
   devtool: 'eval-source-map',
 
   module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                'env', 'stage-0', 'react',
-              ],
-              plugins: ['transform-runtime'],
+    rules: [{
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            'env', 'stage-0', 'react',
+          ],
+          plugins: ['transform-runtime'],
+        },
+      }],
+    }, {
+      test: /\.(c|le)ss$/,
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: [{
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            importLoaders: 2,
+            localIdentName: '[name]-[local]-[hash:base64:5]',
+          },
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            config: {
+              path: path.resolve(__dirname, './postcss.config.js'),
             },
           },
-        ],
-      }, {
-        test: /\.(c|le)ss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                importLoaders: 2,
-                localIdentName: '[name]-[local]-[hash:base64:5]',
-              },
-            }, {
-              loader: 'postcss-loader',
-              options: {
-                config: {
-                  path: path.resolve(__dirname, './postcss.config.js'),
-                },
-              },
-            }, 'less-loader',
-          ],
-        }),
-      },
-    ],
+        }, 'less-loader'],
+      }),
+    }],
   },
 
   resolve: {
@@ -66,8 +60,12 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin('hopeUI.css', { allChunks: true }),
-    new HTMLWebpackPlugin({ template: './app/hopeUI.html' }),
+    new ExtractTextPlugin('hopeUI.css', {
+      allChunks: true,
+    }),
+    new HTMLWebpackPlugin({
+      template: './demo/hopeUI.html',
+    }),
     new webpack.HotModuleReplacementPlugin(),
   ],
 

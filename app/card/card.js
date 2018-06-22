@@ -110,6 +110,8 @@ class Card extends React.Component {
       coverBorder,
       roundAvatar,
       hover,
+      defaultAvatar,
+      defaultCover,
     } = this.props;
 
     return (
@@ -137,6 +139,8 @@ class Card extends React.Component {
         {data.map(item => (
           <Card.Item
             {...item}
+            defaultAvatar={defaultAvatar}
+            defaultCover={defaultCover}
             showAuthor={showAuthor}
             key={item.uuid}
           />
@@ -205,6 +209,10 @@ Card.propTypes = {
   backgroundColor: PropTypes.string,
   // 线条颜色
   lineColor: PropTypes.string,
+  // 默认封面图
+  defaultCover: PropTypes.string,
+  // 默认头像图
+  defaultAvatar: PropTypes.string,
 };
 
 Card.defaultProps = {
@@ -224,6 +232,8 @@ Card.defaultProps = {
   comments: false,
   backgroundColor: 'white',
   lineColor: 'orange500',
+  defaultCover: 'http://ce.sysu.edu.cn/hope/UploadFiles/image/jpg/201506/20150618195515244.jpg',
+  defaultAvatar: 'http://ce.sysu.edu.cn/hope/SitesSkin/Internal/dist/images/practice/internal_practice_noImages_user.png',
 };
 
 export default Card;
