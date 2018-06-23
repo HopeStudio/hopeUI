@@ -3,29 +3,30 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
 
-import colors from '../rules/colors.js';
 import cssCheckTick from './checkTick.less';
-import { CirBlank, CirSelect } from '../icons/export.js';
-import uuid from '../tools/uuid.js';
+import { CirBlank, CirSelect } from '../icons/export';
+import uuid from '../tools/uuid';
 
 class CheckTick extends React.Component {
   state = {
     isChecked: this.props.isChecked,
   };
+
   componentWillMount() {
     this.type = this.props.isMultiple
       ? 'checkbox'
       : 'radio';
     this.uuid = uuid(5);
   }
+
   componentDidMount() {
     $(this.input).data('check', this.setChecked.bind(this));
     this.setChecked(this.props.isChecked);
   }
+
   setChecked(checked) {
     const { disabled } = this.props;
-    if (disabled)
-      {return;}
+    if (disabled) { return; }
     let isChecked;
     if (typeof checked === 'boolean') {
       isChecked = checked;
@@ -35,13 +36,12 @@ class CheckTick extends React.Component {
     this.setState({
       isChecked,
     }, () => this.changeCall());
-    return isChecked;
   }
+
   changeHandle = (e) => {
     const { disabled } = this.props;
-    if (disabled)
-      {return;}
-    const { name, value } = this.props;
+    if (disabled) { return; }
+    const { name } = this.props;
     $(`input[name=${name}][type=${this.type}]`).each((i, item) => {
       const setChecked = $(item).data('check');
       if (e.target === item) {
@@ -51,12 +51,15 @@ class CheckTick extends React.Component {
       if (this.type === 'radio') {
         setChecked(false);
       }
+      return true;
     });
   }
+
   changeCall() {
     const { onChange, value } = this.props;
     onChange(value, this.state.isChecked);
   }
+
   render() {
     const {
       normalIcon,
@@ -64,14 +67,10 @@ class CheckTick extends React.Component {
       disabledIcon,
       children,
       className: propClassName,
-      isMultiple,
-      isChecked,
       disabled,
       value,
       name,
     } = this.props;
-    const NormalIcon = normalIcon || '';
-    const CheckedIcon = checkedIcon || '';
     const normalClass = this.state.isChecked
       ? 'normalIconOff'
       : 'normalIconOn';
@@ -95,29 +94,35 @@ class CheckTick extends React.Component {
         className={classnames(propClassName, cssCheckTick.checkTick, cssCheckTick[disabledBox])}
         key={this.uuid}
       >
-        <label className={classnames(cssCheckTick.label)}>
+        <label
+          className={classnames(cssCheckTick.label)}
+          htmlFor={`checkTick-${this.uuid}`}
+        >
           <input
             className={classnames(cssCheckTick.input)}
-            ref={input => this.input = input}
+            id={`checkTick-${this.uuid}`}
+            ref={(input) => { this.input = input; }}
             type={this.type}
             name={name}
             value={value}
-            onChange={this.changeHandle} 
+            onChange={this.changeHandle}
           />
           <div
             className={classnames(cssCheckTick[normalClass], cssCheckTick[disabledAnti])}
           >
-            {NormalIcon}
+            {normalIcon}
           </div>
           <div
             className={classnames(cssCheckTick[checkedClass], cssCheckTick[disabledAnti])}
           >
-            {CheckedIcon}
+            {checkedIcon}
           </div>
           <div className={classnames(cssCheckTick[disabledClass])}>
             {disabledIcon}
           </div>
-          <span className={classnames(cssCheckTick.text, cssCheckTick[disabledText])}>{children}</span>
+          <span className={classnames(cssCheckTick.text, cssCheckTick[disabledText])}>
+            {children}
+          </span>
         </label>
       </div>
     );
@@ -151,7 +156,7 @@ CheckTick.defaultProps = {
   disabledIcon: <CirBlank fillcolor="grey500" />,
   isChecked: false,
   isMultiple: false,
-  onChange: (value, checked) => {},
+  onChange: () => null,
   disabled: false,
 };
 

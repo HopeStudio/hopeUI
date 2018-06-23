@@ -44,6 +44,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.1.0",
     "jest-canvas-mock": "^1.0.3",
+    "jsdom": "^11.11.0",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "postcss": "^6.0.19",
