@@ -8,7 +8,7 @@ import { Browse, Comments } from '../icons/export';
 
 function CardItem(props) {
   const {
-    uuid,
+    width,
     cover,
     avatar,
     title,
@@ -21,7 +21,10 @@ function CardItem(props) {
   } = props;
 
   return (
-    <div className={classnames(cssCard.card, 'card', `card-${uuid}`)}>
+    <div
+      className={classnames(cssCard.card, 'card')}
+      style={{ width }}
+    >
       <div className={classnames(cssCard.cardContent, 'cardContent')}>
         <div className={classnames(cssCard.coverContainer, 'coverContainer')}>
           <div
@@ -58,7 +61,8 @@ function CardItem(props) {
 }
 
 CardItem.propTypes = {
-  uuid: PropTypes.string.isRequired,
+  // 宽度
+  width: PropTypes.string.isRequired,
   // 标题
   title: PropTypes.string.isRequired,
   // 描述
