@@ -3,10 +3,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import css from './colorPick.less';
-import colors from '../rules/colors';
 import uuid from '../tools/uuid';
 
-const rgbReg = /^rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\d+\s*)?\)$/i;
 const hexReg = /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/i;
 
 function toHex([r, g, b]) {
@@ -15,28 +13,16 @@ function toHex([r, g, b]) {
 }
 
 function parseColor(colorStr) {
-  let color = colorStr;
-
-  const rgb = color.match(rgbReg);
-  if (rgb) return rgb.slice(1).map(value => parseInt(value, 10));
-
-  const innerColor = colors[color];
-  if (innerColor) color = innerColor;
-
-  const hex = color.match(hexReg);
-  if (hex) {
-    let hexStr = hex[1];
-    if (hexStr.length === 3) {
-      hexStr = `${hexStr[0]}${hexStr[0]}${hexStr[1]}${hexStr[1]}${hexStr[2]}${hexStr[2]}`;
-    }
-    return [
-      parseInt(hexStr.slice(0, 2), 16),
-      parseInt(hexStr.slice(2, 4), 16),
-      parseInt(hexStr.slice(4, 6), 16),
-    ];
+  const hex = colorStr.match(hexReg);
+  let hexStr = hex[1];
+  if (hexStr.length === 3) {
+    hexStr = `${hexStr[0]}${hexStr[0]}${hexStr[1]}${hexStr[1]}${hexStr[2]}${hexStr[2]}`;
   }
-
-  throw new Error('invaild color');
+  return [
+    parseInt(hexStr.slice(0, 2), 16),
+    parseInt(hexStr.slice(2, 4), 16),
+    parseInt(hexStr.slice(4, 6), 16),
+  ];
 }
 
 class ColorInput extends React.Component {
@@ -68,9 +54,6 @@ class ColorInput extends React.Component {
     if (value > 255) value = 255;
     if (value < 0) value = 0;
     switch (key) {
-      case 'R':
-        color[0] = value;
-        break;
       case 'G':
         color[1] = value;
         break;
@@ -78,6 +61,7 @@ class ColorInput extends React.Component {
         color[2] = value;
         break;
       default:
+        color[0] = value;
         break;
     }
 
@@ -147,9 +131,9 @@ ColorInput.propTypes = {
 };
 
 ColorInput.defaultProps = {
+  onChange: () => {},
   height: 40,
   color: [255, 0, 0],
-  onChange: () => {},
 };
 
 export default ColorInput;

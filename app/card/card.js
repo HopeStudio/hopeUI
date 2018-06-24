@@ -11,6 +11,8 @@ import CardItem from './cardItem';
 class Card extends React.Component {
   static Item = CardItem;
 
+  state = { columns: this.props.columns }
+
   componentWillMount() {
     this.uuid = uuid(8);
     this.props.data.forEach((item) => { item.uuid = uuid(8); });
@@ -19,7 +21,6 @@ class Card extends React.Component {
 
   componentDidMount() {
     this.setWidth();
-    this.timer = false;
     window.addEventListener('resize', () => {
       if (this.timer) return;
       this.timer = true;
@@ -45,14 +46,8 @@ class Card extends React.Component {
     const { minWidth } = this.props;
     const width = $(this.ele).innerWidth();
     if (width / columns < minWidth) columns = Math.floor(width / minWidth);
-    if (columns === this.columns) return;
-
-    this.columns = columns;
-    $(`#${this.widthId}`).remove();
-    this.widthId = colorTrans(
-      { width: `${(1 / columns) * 100}%` },
-      `.cardContainer-${this.uuid} .${cssCard.card}`,
-    );
+    if (columns === this.state.columns) return;
+    this.setState({ columns });
   }
 
 
@@ -91,12 +86,11 @@ class Card extends React.Component {
   clearStyle() {
     this.styleId.forEach(id => $(`#${id}`).remove());
     this.styleId = [];
-    $(this.widthId).remove();
-    this.widthId = undefined;
   }
 
 
   styleId = [];
+  timer = false;
 
   render() {
     const {
@@ -113,6 +107,9 @@ class Card extends React.Component {
       defaultAvatar,
       defaultCover,
     } = this.props;
+
+    const { columns } = this.state;
+    const width = `${100 / columns}%`;
 
     return (
       <div
@@ -142,6 +139,7 @@ class Card extends React.Component {
             defaultAvatar={defaultAvatar}
             defaultCover={defaultCover}
             showAuthor={showAuthor}
+            width={width}
             key={item.uuid}
           />
         ))}
