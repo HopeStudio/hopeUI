@@ -1,13 +1,16 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { JSDOM } from 'jsdom';
+import { JSDOM, VirtualConsole } from 'jsdom';
 
 configure({ adapter: new Adapter() });
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const virtualConsole = new VirtualConsole();
+const jsdom = new JSDOM(
+  '<!doctype html><html><body><div id="root"></div></body></html>',
+  { virtualConsole },
+);
 const { window } = jsdom;
-
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)
     .filter(prop => typeof target[prop] === 'undefined')

@@ -78,7 +78,11 @@
       "\\.(css|less)$": "identity-obj-proxy"
     },
     "collectCoverageFrom": [
-      "app/**/*.js"
+      "app/**/*.js",
+      "!app/index.js",
+      "!app/icons/**/*",
+      "!app/rules/**/*",
+      "!app/tools/**/*"
     ],
     "coverageDirectory": "coverage",
     "setupFiles": [

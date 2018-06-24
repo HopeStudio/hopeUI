@@ -67,7 +67,7 @@ class Palette extends React.Component {
     this.selectColor(e);
   })
 
-  handleMouseLeave = this::(function handleMouseOut(e) {
+  handleMouseLeave = this::(function handleMouseLeave(e) {
     e.preventDefault();
     if (!this.selecting) return;
     $('body').one('mouseup', this.handleBodyMouseUp);

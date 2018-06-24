@@ -9,7 +9,7 @@ import Palette from './palette';
 import HuePick from './huePick';
 import ColorInput from './colorInput';
 
-const rgbReg = /^rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\d+\s*)?\)$/i;
+const rgbReg = /^rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*[.0-9]+\s*)?\)$/i;
 const hexReg = /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/i;
 
 function parseColor(colorStr) {
@@ -34,7 +34,7 @@ function parseColor(colorStr) {
     ];
   }
 
-  throw new Error('invaild color');
+  throw new Error('invalid color');
 }
 
 function toHueColor(color) {
@@ -70,11 +70,8 @@ function toRGB(hueColor, x, y) {
 
 function toXY([R, G, B]) {
   const [r, g, b] = toHueColor([R, G, B]);
-  if (g === 255) {
-    if (r === 255) {
-      if (b === 255) {
-        return { x: 0, y: 0 };
-      }
+  if (g >= 255) {
+    if (r >= 255) {
       const x = (255 * (B - G)) / (G * (b - 255));
       const y = 1 - (G / 255);
       return { x, y };
@@ -82,11 +79,17 @@ function toXY([R, G, B]) {
     const x = (255 * (R - G)) / (G * (r - 255));
     const y = 1 - (G / 255);
     return { x, y };
+  } else if (r === b) {
+    const y = 1 - (R / 255);
+    const x = (G + R) / R;
+    return { x, y };
   }
   const y = ((((B - R - b) + r) - ((B * r) / 255)) + ((R * b) / 255)) / (r - b);
   const x = ((G + (255 * y)) - 255) / ((1 - y) * (g - 255));
   return { x, y };
 }
+
+toXY([255, 255, 52]);
 
 class ColorPick extends React.Component {
   static Palette = Palette;
