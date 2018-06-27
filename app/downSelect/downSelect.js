@@ -1,44 +1,75 @@
+/** TODO: 手动填写、自动识别 */
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import $ from 'jQuery';
 
-import colors from '../rules/colors.js';
 import cssDownSelect from './downSelect.less';
-import uuid from '../tools/uuid.js';
-import colorTrans from '../tools/colorTrans.js';
-import {ArrowDropDown} from '../icons/export.js';
-import DownItem from './downItem.js';
+import uuid from '../tools/uuid';
+import colorTrans from '../tools/colorTrans';
+import { ArrowDropDown } from '../icons/export';
+import DownItem from './downItem';
 
 class DownSelect extends React.Component {
   static Item = DownItem
   state = {
     isDown: false,
-    selectObj: {}
+    selectObj: {},
   }
-  selectCall = (name, value) => (bool, fn) => this.setSelect(name, value, bool, fn)
-  objCall = () => this.state.selectObj
-  itemEdit = (() => {
-    let edit = [];
-    return (item) => {
-      edit.push(item);
-      return (uuid) => {
-        const except = edit.findIndex((item) => {
-          return item.uuid === uuid;
-        })
-        edit.forEach((item, i) => {
-          if (except === i) 
-            return;
-          item.setSelect();
-        })
-      }
+
+  componentWillMount() {
+    const { isMultiple, defaultKey, data } = this.props;
+    if (!isMultiple && defaultKey instanceof Array) {
+      throw new Error('单选框只能指定一个字符串作为默认值');
     }
-  })()
+    if (isMultiple && defaultKey instanceof Array) {
+      defaultKey.forEach((item) => { this.state.selectObj[item] = data[item]; });
+    } else {
+      this.state.selectObj[defaultKey] = data[defaultKey];
+    }
+    this.uuid = uuid(8);
+    this.itemID = [];
+    Object.keys(data).forEach(() => {
+      this
+        .itemID
+        .push(uuid(8));
+    });
+    this.itemArr = this.getItems();
+  }
+
+  componentDidMount() {
+    const { areaStyle } = this.props;
+    colorTrans(areaStyle, `.${this.uuid} .hope-selectArea`);
+  }
+
+  setSelect(name, value, bool, fn) {
+    const { isMultiple } = this.props;
+    if (!bool) {
+      delete this.state.selectObj[name];
+      this.setState({}, () => fn());
+      return;
+    }
+    if (isMultiple) {
+      this.setState({
+        selectObj: Object.assign({}, this.state.selectObj, { [name]: value }),
+      }, () => fn());
+    } else {
+      this.setState({
+        selectObj: {
+          [name]: value,
+        },
+      }, () => fn());
+    }
+  }
+
   getItems() {
-    const {data, defaultKey, selectStyle} = this.props;
-    let itemArr = [];
-    for (let i in data) {
-      itemArr.push(
+    const {
+      data,
+      selectStyle,
+      normalStyle,
+    } = this.props;
+    const itemArr = [];
+    Object.keys(data).forEach((i) => {
+      itemArr.push((
         <DownSelect.Item
           selectCall={this.selectCall(i, data[i])}
           objCall={this.objCall}
@@ -46,74 +77,65 @@ class DownSelect extends React.Component {
           name={i}
           value={data[i]}
           selectStyle={selectStyle}
+          normalStyle={normalStyle}
           uuid={this.itemID[itemArr.length]}
-          key={this.itemID[itemArr.length]}>
+          key={this.itemID[itemArr.length]}
+        >
           {data[i]}
         </DownSelect.Item>
-      )
-    }
+      ));
+    });
     return itemArr;
   }
-  componentWillMount() {
-    const {isMultiple, defaultKey, data} = this.props;
-    if (!isMultiple && defaultKey instanceof Array) {
-      throw new Error('单选框只能指定一个字符串作为默认值')
-    }
-    if (isMultiple && defaultKey instanceof Array) {
-      defaultKey.forEach((item) => this.state.selectObj[item] = data[item])
-    } else {
-      this.state.selectObj[defaultKey] = data[defaultKey]
-    }
-    this.uuid = uuid(8);
-    this.itemID = [];
-    for (let i in data) {
-      this
-        .itemID
-        .push(uuid(8))
-    }
-    this.itemArr = this.getItems();
-  }
-  setSelect(name, value, bool, fn) {
-    const {isMultiple} = this.props;
-    if (!bool) {
-      delete this.state.selectObj[name]
-      this.setState({}, () => fn())
-      return;
-    }
-    if (isMultiple) {
-      this.setState({
-        selectObj: Object.assign({}, this.state.selectObj, {[name]: value})
-      }, () => fn())
-    } else {
-      this.setState({
-        selectObj: {
-          [name]: value
-        }
-      }, () => fn())
-    }
-  }
+
   getValue() {
-    const {selectObj} = this.state;
-    let value = Object
+    const { selectObj } = this.state;
+    const value = Object
       .values(selectObj)
-      .join(';')
+      .join(';');
     return value;
   }
-  clickHandle = e => {
+
+  itemEdit = (() => {
+    const edit = [];
+    return (_item) => {
+      edit.push(_item);
+      return (selfUuid) => {
+        const except = edit.findIndex(item => item.uuid === selfUuid);
+        edit.forEach((item, i) => {
+          if (except === i) { return; }
+          item.setSelect();
+        });
+      };
+    };
+  })()
+
+  objCall = () => this.state.selectObj
+
+  selectCall = (name, value) => (bool, fn) => {
+    const { onChange } = this.props;
+    this.setSelect(name, value, bool, () => {
+      fn();
+      onChange(this.state.selectObj);
+    });
+  }
+
+  clickHandle = () => {
     this.setState({
-      isDown: !this.state.isDown
-    })
+      isDown: !this.state.isDown,
+    });
   }
-  changeHandle = e => {
-    const {onChange} = this.props;
-    onChange(e.target.value);
+
+  keyDownHandle = ({ keyCode }) => {
+    if (keyCode === 13) this.clickHandle();
   }
-  componentDidMount() {
-    const {areaStyle} = this.props;
-    colorTrans(areaStyle, `.${this.uuid} .hope-selectArea`)
-  }
+
   render() {
-    const {buttonIcon, className: propClassName, isInput, children} = this.props;
+    const {
+      buttonIcon,
+      className: propClassName,
+      disabled,
+    } = this.props;
     const downBox = this.state.isDown
       ? 'downBox'
       : 'hideBox';
@@ -125,25 +147,33 @@ class DownSelect extends React.Component {
               type="text"
               className={classnames(cssDownSelect.selectInput)}
               value={this.getValue()}
-              onChange={this.changeHandle}/>
+              readOnly
+            />
           </div>
-          <div className={classnames(cssDownSelect.selectBtn)} onClick={this.clickHandle}>
+          <div
+            className={classnames(cssDownSelect.selectBtn)}
+            onClick={disabled ? null : this.clickHandle}
+            onKeyDown={disabled ? null : this.keyDownHandle}
+            tabIndex="0"
+            role="button"
+          >
             {buttonIcon}
           </div>
         </div>
         <div className={classnames(cssDownSelect[downBox])}>
-          <ul className={classnames(cssDownSelect.downList)}>
+          <ul className={classnames(cssDownSelect.downList)} role="listbox">
             {this.itemArr}
           </ul>
         </div>
       </div>
-    )
+    );
   }
 }
 
 DownSelect.propTypes = {
   // 是否禁用
   disabled: PropTypes.bool,
+  areaStyle: PropTypes.object,
   // 下拉框样式
   normalStyle: PropTypes.object,
   // 选中样式
@@ -152,31 +182,29 @@ DownSelect.propTypes = {
   buttonIcon: PropTypes.object,
   // 是否多选
   isMultiple: PropTypes.bool,
-  // 是否可填写
-  isInput: PropTypes.bool,
-  // 是否自动识别
-  ableAutoComplete: PropTypes.bool,
   // 数据
   data: PropTypes.object.isRequired,
   // 默认选中的数据键组
-  defaultKey: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
-}
+  defaultKey: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  // change 时间处理程序
+  onChange: PropTypes.func,
+};
 
 DownSelect.defaultProps = {
   disabled: false,
-  buttonIcon: <ArrowDropDown fillcolor='grey700'/>,
-  onChange: (value) => {
-    console.log(value)
-  },
+  buttonIcon: <ArrowDropDown fillcolor="grey700" />,
+  onChange: () => {},
   defaultKey: '0',
+  isMultiple: false,
+  areaStyle: {},
   selectStyle: {
     background: 'blue400',
-    color: 'grey50'
+    color: 'grey50',
   },
   normalStyle: {
     background: 'transparent',
-    color: 'grey900'
-  }
-}
+    color: 'grey900',
+  },
+};
 
 export default DownSelect;
