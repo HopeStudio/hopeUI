@@ -1,15 +1,37 @@
+.container {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border: 1px solid lightseagreen;
+    border-radius: 5px;
+}
+
 .input {
-    background: lightcoral;
+    display: inline-block;
+    width: 100px;
+    height: 40px;
+    padding: 0 16px;
+    line-height: 40px;
+    outline: none;
+    border: none;
+    order: 2;
+    text-align: center;
 }
 
 .btn {
-    background: lightcoral;
+    width: 50px;
+    height: 40px;
+    background: lightgrey;
+    cursor: pointer;
+    user-select: none;
 }
 
 .btnLeft {
-    background: lightcoral;
+    order: 0;
+    border-radius: 5px 0 0 5px;
 }
 
 .btnRight {
-    background: lightcoral;
+    order: 3;
+    border-radius: 0 5px 5px 0;
 }
