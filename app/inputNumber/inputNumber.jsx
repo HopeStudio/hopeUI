@@ -1,13 +1,14 @@
 import { Component } from 'react';
 import cssInputNumber from './InputNumber.less';
 import classnames from 'classnames';
+import utils from './utils';
 
 class InputNumber extends Component {
     static defaultProps = {
         value: 0,
         step: 1,
-        max: Infinity,
-        min: -Infinity
+        max: 100,
+        min: -100
     }
 
     constructor(props) {
@@ -43,8 +44,7 @@ class InputNumber extends Component {
         this.setState((prev, props) => {
             const { value: prevValue } = prev;
             const { step, max } = props;
-
-            let value = +prevValue + step;
+            let value = utils.calculateFromString(prevValue) + step;
             value = value > max ? max : value;
             return {
                 value
@@ -56,8 +56,7 @@ class InputNumber extends Component {
         this.setState((prev, props) => {
             const { value: prevValue } = prev;
             const { step, min } = props;
-
-            let value = +prevValue - step;
+            let value = utils.calculateFromString(prevValue) - step;
             value = value < min ? min : value;
             return {
                 value
@@ -85,16 +84,18 @@ class InputNumber extends Component {
         this.setState({
             value: newValue
         });
-
     }
 
     handleKeyDown = (event) => {
         // key Enter
         if (event.keyCode === 13) {
             const { value } = this.state;
-            
+            const {max, min} = this.props;
+            let newValue  = utils.calculateFromString(value);
+            newValue = newValue > max ? max : newValue;
+            newValue = newValue < min ? min : newValue;
             this.setState({
-                value: calculateValue
+                value: newValue
             });
         }
     }

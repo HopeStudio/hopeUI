@@ -8,7 +8,7 @@
 
 ## style
 1. size
-2. layout
+2. layout: 指数、小数、特殊字符
 3. color
 
 ## event
