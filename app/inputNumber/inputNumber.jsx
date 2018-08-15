@@ -92,39 +92,7 @@ class InputNumber extends Component {
         // key Enter
         if (event.keyCode === 13) {
             const { value } = this.state;
-            // const res = value.match(this.isEquation);
-            // const res = this.isEquation.exec(value);
-            // console.log(res);
-            // console.log(this.isEquation.$1)
-
-            let operator = res[1] === '' ? '+' : '-';
-            let result = res.slice(1);
-            // console.log(result);
-
-            const calculateValue = result.reduce((prev, cur) => {
-                // console.log([prev,cur]);
-                let { value, operator } = prev;
-                if (cur === '-' || cur === '+') {
-                    operator = cur;
-                } else if(cur === undefined){
-                    
-                } else{
-                    switch (operator) {
-                        case '-':
-                            value -= +cur;
-                            break;
-                        case '+':
-                            value += +cur;
-                            break;
-                    }
-                }
-                return {
-                    value,
-                    operator
-                }
-
-            }, { value: 0, operator }).value;
-
+            
             this.setState({
                 value: calculateValue
             });
