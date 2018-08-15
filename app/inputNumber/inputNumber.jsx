@@ -8,14 +8,21 @@ class InputNumber extends Component {
         value: 0,
         step: 1,
         max: 100,
-        min: -100
+        min: -100,
+        calculable: false
     }
 
     constructor(props) {
         super(props);
-
+        // initial state
         this.state = {
             value: this.props.value,
+        }
+
+        // bind methods
+        let binds = ['increase', 'decrease', 'handleChange', 'handleKeyDown', 'setValue', 'plus'];
+        for (let i in binds) {
+            this[binds[i]] = this[binds[i]].bind(this);
         }
     }
 
@@ -25,82 +32,75 @@ class InputNumber extends Component {
             <div className={classnames(cssInputNumber.container)}>
                 <span
                     className={classnames(cssInputNumber.btnLeft, cssInputNumber.btn)}
-                    onClick={this.decrease}></span>
+                    onClick={this.decrease}>
+                </span>
                 <div className={classnames(cssInputNumber.inputContainer)}>
-                    <input type="text"
+                    <input
+                        type="text"
                         className={classnames(cssInputNumber.input)}
                         value={value}
                         onChange={this.handleChange}
                         onKeyDown={this.handleKeyDown}
                         key={"244"} />
                 </div>
-                <span className={classnames(cssInputNumber.btnRight, cssInputNumber.btn)}
-                    onClick={this.increase}></span>
+                <span
+                    className={classnames(cssInputNumber.btnRight, cssInputNumber.btn)}
+                    onClick={this.increase}>
+                </span>
             </div>
         );
     }
 
-    increase = () => {
-        this.setState((prev, props) => {
-            const { value: prevValue } = prev;
-            const { step, max } = props;
-            let value = utils.calculateFromString(prevValue) + step;
-            value = value > max ? max : value;
-            return {
-                value
-            }
-        });
+    increase() {
+        this.plus();
     }
 
-    decrease = () => {
+    decrease() {
+        this.plus(-this.props.step);
+    }
+
+    plus(step = this.props.step, reverse = false) {
         this.setState((prev, props) => {
-            const { value: prevValue } = prev;
-            const { step, min } = props;
-            let value = utils.calculateFromString(prevValue) - step;
-            value = value < min ? min : value;
+            const { value: prevVal } = prev;
+            const { min, max } = props;
+            const curVal = utils.calculateFromString(prevVal) + (reverse ? -step : step);
+            const value = utils.range(curVal, min, max);
+
             return {
                 value
             }
         })
     }
 
-    handleChange = (event) => {
-        const { value } = event.target;
-        const { min, max } = this.props;
-        let newValue = '';
-        if (value == '-' || value == '') {
-            console.log(value);
-            newValue = value;
-            console.log(newValue)
-        } else if (this.isEquation.test(value)) {
-            newValue = value;
-        } else {
-            newValue = +value;
-            newValue = newValue > max ? max : (newValue < min ? min : newValue);
-            if (isNaN(value)) {
-                return;
-            }
+    handleChange(event) {
+        const { value: prevVal } = event.target;
+        let value = '';
+
+        if (utils.isEquation(prevVal)) {
+            value = prevVal;
+            this.setValue(value);
         }
-        this.setState({
-            value: newValue
-        });
     }
 
-    handleKeyDown = (event) => {
+
+    handleKeyDown(event) {
         // key Enter
         if (event.keyCode === 13) {
             const { value } = this.state;
-            const {max, min} = this.props;
-            let newValue  = utils.calculateFromString(value);
-            newValue = newValue > max ? max : newValue;
-            newValue = newValue < min ? min : newValue;
-            this.setState({
-                value: newValue
-            });
+            let newValue = utils.calculateFromString(value);
+            this.setValue(newValue, true);
         }
     }
 
-    isEquation = /^(-?)(?:(\d+)(\+|\-){1})*(\d+)?$/;
+    setValue(value, range = false) {
+        if (range) {
+            const { max, min } = this.props;
+            value = utils.range(value, min, max);
+        }
+        this.setState({
+            value
+        });
+    }
 }
 
 export default InputNumber;

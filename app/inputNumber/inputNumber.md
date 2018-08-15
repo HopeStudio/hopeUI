@@ -5,6 +5,7 @@
 4. min&max
 5. controls
 6. active
+7. calculable
 
 ## style
 1. size
