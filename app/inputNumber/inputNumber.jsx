@@ -1,14 +1,17 @@
 import { Component } from 'react';
 import classnames from 'classnames';
 import css from './InputNumber.less';
-import utils from './utils';
+import Button from '../button/button';
+import { ArrowDown, ArrowUp } from '../icons/export';
 /* eslint-disable */
 class InputNumber extends Component {
 	static defaultProps = {
 		value: 0,
-		step: 1,
-		max: 10,
-		min: -10,
+		step: 0.5,
+		max: 100,
+		min: 0,
+		disabled: false,
+		precision: true
 	}
 
 	constructor(props) {
@@ -16,36 +19,46 @@ class InputNumber extends Component {
 
 		this.state = {
 			value: this.props.value,
+			btnLeftDisable: false,
+			btnRightDisable: false
 		}
 
-		let binds = ['increase', 'decrease', 'handleChange', 'setValue', 'plus'];
+		let binds = ['increase', 'decrease', 'handleChange', 'setValue', 'plus','checkValue','test'];
 		for (let i in binds) {
 			this[binds[i]] = this[binds[i]].bind(this);
 		}
 	}
 
+	componentDidMount() {
+		this.setValue(this.props.value);
+	}
+
 	render() {
-		const { value } = this.state;
-		const {container, btn, btnLeft, inputContainer, input, btnRight} = css;
+		const {disabled: inputDisable} = this.props;
+		const { value, btnLeftDisable, btnRightDisable } = this.state;
+		const {container, btn, btnLeft, inputContainer, input, btnRight, disable} = css;
 		return (
-			<div className={container}>
-				<span
-					className={classnames(btn, btnLeft)}
-					onClick={this.decrease}>
-				</span>
+			<div className={classnames(container,{[disable]: inputDisable})}>
+			<Button onClick={this.decrease} 
+			className={classnames(btn, btnLeft)} 
+			icon={<ArrowDown width='100%' height='100%'/>}
+			type={btnLeftDisable || inputDisable ? 'disabled': 'activate'}
+			content=''/>
 				<div className={inputContainer}>
 					<input
 						type="text"
 						className={input}
 						value={value}
 						onChange={this.handleChange}
-						onKeyDown={this.handleKeyDown}
-						key={"244"} />
+						key={"244"} 
+						disabled={inputDisable}/>
 				</div>
-				<span
-					className={classnames(btn, btnRight)}
-					onClick={this.increase}>
-				</span>
+			<Button 
+			onClick={this.increase} 
+			className={classnames(btn, btnRight)}
+			icon={<ArrowUp width='100%' height='100%'/>} 
+			type={btnRightDisable || inputDisable ? 'disabled': 'activate'}
+			content=''/>
 			</div>
 		);
 	}
@@ -58,39 +71,49 @@ class InputNumber extends Component {
 		this.plus(-this.props.step);
 	}
 
-	plus(step = this.props.step, reverse = false) {
-		this.setState((prev, props) => {
-			const { value: prevVal } = prev;
-			const { min, max } = props;
-			const curVal = prevVal + (reverse ? -step : step);
-			const value = utils.range(curVal, min, max);
-
-			return {
-				value
-			}
-		})
+	plus(step = this.props.step) {
+		if(this.props.disabled) {
+			return;
+		}
+		this.setValue(preValue => preValue + step);
 	}
 
 	handleChange(event) {
-		const { value: prevVal } = event.target;
-		let value = '';
-
-		if (utils.isEquation(prevVal)) {
-			value = prevVal;
-			this.setValue(value);
+		const { value } = event.target;
+		if(this.test(value)) {
+			this.setValue(+value);
 		}
 	}
 
-
-	setValue(value, range = false) {
-		if (range) {
-			const { max, min } = this.props;
-			value = utils.range(value, min, max);
-		}
-		this.setState({
-			value
+	setValue(value = this.props.value) {
+		this.setState(prev => {
+			return this.checkValue(typeof value === typeof (()=>{}) ? value(prev.value) : value);
 		});
 	}
+
+	checkValue(value) {
+		const { max, min } = this.props;
+		let btnLeftDisable = false;
+		let btnRightDisable = false;
+		if(value >= max) {
+			btnRightDisable = true;
+			value = max;
+		} else if (value <= min) {
+			btnLeftDisable = true;
+			value = min;
+		}
+
+		return {
+			value,
+			btnRightDisable,
+			btnLeftDisable
+		};
+	}
+
+	test(value) {
+		return /^-?\d+$/g.test(value);
+	}
+
 }
 
 export default InputNumber;

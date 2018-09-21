@@ -1,8 +1,9 @@
+@import '../rules/colors.less';
 .container {
     display: inline-flex;
     flex-flow: row nowrap;
     align-items: center;
-    border: 1px solid lightseagreen;
+    border: 1px solid @blue300;
     border-radius: 5px;
 }
 
@@ -15,23 +16,39 @@
     outline: none;
     border: none;
     order: 2;
-    text-align: center;
+		text-align: center;
+		background: inherit;
 }
 
 .btn {
     width: 50px;
-    height: 40px;
-    background: lightgrey;
-    cursor: pointer;
-    user-select: none;
+		height: 40px;
+		margin: 0 !important;
+		outline: none;
+		user-select: none;
+		&::after {
+			box-shadow: 0 0 0 1px @blue300 !important;
+		}
 }
 
 .btnLeft {
-    order: 0;
-    border-radius: 5px 0 0 5px;
+		order: 0;
+		border-radius: 5px 0 0 5px !important;
+		&::after {
+			border-radius: 5px 0 0 5px !important;
+		}
+    
 }
 
 .btnRight {
-    order: 3;
-    border-radius: 0 5px 5px 0;
+		order: 3;
+		border-radius: 0 5px 5px 0 !important;
+		&::after {
+			border-radius: 0 5px 5px 0 !important;
+		}
+}
+
+.disable {
+	background: @grey300;
+	border-color: @grey300;
 }
