@@ -18,10 +18,10 @@ class InputNumber extends Component {
     disabled: false,
     precision: false,
     className: '',
-    onChange: () => {},
-    onBlur: () => {},
-    onFocus: () => {},
-    onClick: () => {},
+    onChange: () => { },
+    onBlur: () => { },
+    onFocus: () => { },
+    onClick: () => { },
   }
 
   static propTypes = {
@@ -42,7 +42,12 @@ class InputNumber extends Component {
     super(props);
     const {
       max, min, step, precision, value,
-    } = Object.assign({}, this.defaultProps, props);
+    } = Object.assign(
+      {},
+      this.defaultProps,
+      props,
+    );
+
     this.state = {
       max: InputNumber.format(max, precision),
       min: InputNumber.format(min, precision),
@@ -58,16 +63,19 @@ class InputNumber extends Component {
   }
 
   render() {
-    const { disabled: inputDisable, onClick, onBlur, onFocus } = this.props;
+    const {
+      disabled: inputDisable, onClick, onBlur, onFocus,
+    } = this.props;
     const { value, btnLeftDisable, btnRightDisable } = this.state;
     const {
       container, btn, btnLeft, inputContainer, input, btnRight, disable,
     } = css;
     return (
-      <div className={classnames(this.props.className, container, { [disable]: inputDisable })}
-      onClick={onClick}
-      onBlur={onBlur}
-      onFocus={onFocus}
+      <div
+        className={classnames(this.props.className, container, { [disable]: inputDisable })}
+        onClick={onClick}
+        onBlur={onBlur}
+        onFocus={onFocus}
       >
         <Button
           onClick={this.decrease}
@@ -97,38 +105,6 @@ class InputNumber extends Component {
         />
       </div>
     );
-  }
-
-
-  handleChange(event) {
-    const { value } = event.target;
-    if (this.test(value)) {
-      this.setValue(value);
-    }
-  }
-
-  setValue(value = this.props.value) {
-    const {onChange} = this.props;
-    this.setState(prev =>
-      this.checkValue(typeof value === typeof (() => { })
-        ? value(prev.value) : value), () => {
-          onChange(this.state.value);
-        });
-  }
-
-  plus(step = this.state.step) {
-    if (this.props.disabled) {
-      return;
-    }
-    this.setValue(preValue => +preValue + step);
-  }
-
-  increase() {
-    this.plus();
-  }
-
-  decrease() {
-    this.plus(-this.state.step);
   }
 
   checkValue(value) {
@@ -169,11 +145,42 @@ class InputNumber extends Component {
     };
   }
 
+  setValue(value = this.props.value) {
+    const { onChange } = this.props;
+    this.setState(prev =>
+      this.checkValue(typeof value === typeof (() => { })
+        ? value(prev.value) : value), () => {
+      onChange(this.state.value);
+    });
+  }
+
+  plus(step = this.state.step) {
+    if (this.props.disabled) {
+      return;
+    }
+    this.setValue(preValue => +preValue + step);
+  }
+
+  increase() {
+    this.plus();
+  }
+
+  decrease() {
+    this.plus(-this.state.step);
+  }
+
   test(value) {
     if (this.props.precision) {
       return /(^-?\d+\.?\d*$)|(^[\s\S]{0}$)/g.exec(value);
     }
     return /^-?\d+$|^[\s\S]{0}$/g.exec(value);
+  }
+
+  handleChange(event) {
+    const { value } = event.target;
+    if (this.test(value)) {
+      this.setValue(value);
+    }
   }
 
   handleBlur(event) {
