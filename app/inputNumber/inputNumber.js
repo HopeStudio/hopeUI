@@ -14,9 +14,9 @@ class InputNumber extends Component {
     value: 0,
     step: 1,
     max: 10,
-    min: 0,
+    min: -10,
     disabled: false,
-    precision: false,
+    precision: 2,
     className: '',
     onChange: () => { },
     onBlur: () => { },
@@ -60,8 +60,8 @@ class InputNumber extends Component {
 
   componentDidMount() {
     this.setValue(this.props.value);
-  }
-
+	}
+	
   render() {
     const {
       disabled: inputDisable, onClick, onBlur, onFocus,
@@ -109,7 +109,10 @@ class InputNumber extends Component {
 
   checkValue(value) {
     const { precision } = this.props;
-    const { max, min } = this.state;
+		const { max, min } = this.state;
+		if(Object.is(value, NaN)) {
+			value = 0;
+		}
 
     if (+value > max) {
       value = max;
@@ -171,9 +174,9 @@ class InputNumber extends Component {
 
   test(value) {
     if (this.props.precision) {
-      return /(^-?\d+\.?\d*$)|(^[\s\S]{0}$)/g.exec(value);
+      return /(^-(?!\.)\d*\.?\d*$|^\d*\.?\d*$)|(^[\s\S]{0}$)/g.test(value);
     }
-    return /^-?\d+$|^[\s\S]{0}$/g.exec(value);
+    return /^-?\d*$|^[\s\S]{0}$/g.test(value);
   }
 
   handleChange(event) {
