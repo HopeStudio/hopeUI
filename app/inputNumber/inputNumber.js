@@ -8,13 +8,27 @@ import { ArrowDown, ArrowUp } from '../icons/export';
 class InputNumber extends Component {
   static format(props, precision) {
     return precision ? +props.toFixed(precision) : +props.toFixed(0);
+	}
+	
+	static propTypes = {
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    step: PropTypes.number,
+    max: PropTypes.number,
+    min: PropTypes.number,
+    disabled: PropTypes.bool,
+    precision: PropTypes.number,
+    className: PropTypes.string,
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    onClick: PropTypes.func,
   }
 
   static defaultProps = {
     value: 0,
-    step: 0.7,
-    max: 10,
-    min: -10,
+    step: 1,
+    max: Infinity,
+    min: -Infinity,
     disabled: false,
     precision: 0,
     className: '',
@@ -24,27 +38,13 @@ class InputNumber extends Component {
     onClick: () => { },
   }
 
-  static propTypes = {
-    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    step: PropTypes.number,
-    max: PropTypes.number,
-    min: PropTypes.number,
-    disabled: PropTypes.bool,
-    precision: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-    className: PropTypes.string,
-    onChange: PropTypes.func,
-    onBlur: PropTypes.func,
-    onFocus: PropTypes.func,
-    onClick: PropTypes.func,
-  }
-
   constructor(props) {
     super(props);
 
     this.state = {
-			value: this.props.value,
-			btnLeftDisable: false,
-			btnRightDisable: false,
+      value: this.props.value,
+      btnLeftDisable: false,
+      btnRightDisable: false,
     };
     const binds = ['increase', 'decrease', 'handleChange', 'setValue', 'plus', 'checkValue', 'test', 'handleBlur', 'handleEnterDown'];
     binds.forEach((item) => { this[item] = this[item].bind(this); });
@@ -52,8 +52,8 @@ class InputNumber extends Component {
 
   componentDidMount() {
     this.setValue(this.props.value);
-	}
-	
+  }
+
   render() {
     const {
       disabled: inputDisable, onClick, onBlur, onFocus,
@@ -101,9 +101,9 @@ class InputNumber extends Component {
 
   checkValue(value) {
     const { precision, max, min } = this.props;
-		if(Object.is(value, NaN)) {
-			value = 0;
-		}
+    if (Object.is(value, NaN)) {
+      value = 0;
+    }
 
     if (+value > max) {
       value = max;
