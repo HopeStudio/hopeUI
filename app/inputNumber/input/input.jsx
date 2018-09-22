@@ -1,17 +1,15 @@
-import { Component  } from "react";
+import { Component } from 'react';
 
 class Input extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        return (
-            <input type="text" />
-        );
-    }
+  render() {
+    return (
+      <input type="text" />
+    );
+  }
 }
 
-export {
-    Input
-};
+export { Input };
