@@ -17,6 +17,7 @@ class InputNumber extends Component {
     min: 0,
     disabled: false,
     precision: false,
+    onChange: () => {}
   }
 
   static propTypes = {
@@ -26,6 +27,7 @@ class InputNumber extends Component {
     min: PropTypes.number,
     disabled: PropTypes.bool,
     precision: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    onChange: PropTypes.func
   }
 
   constructor(props) {
@@ -94,9 +96,12 @@ class InputNumber extends Component {
   }
 
   setValue(value = this.props.value) {
+    const {onChange} = this.props;
     this.setState(prev =>
       this.checkValue(typeof value === typeof (() => { })
-        ? value(prev.value) : value));
+        ? value(prev.value) : value), () => {
+          onChange(this.state.value);
+        });
   }
 
   plus(step = this.state.step) {
@@ -129,7 +134,6 @@ class InputNumber extends Component {
       value = typeof value === typeof 1
         ? value.toFixed(precision) : value;
     }
-
     return {
       value,
       ...btnState,
