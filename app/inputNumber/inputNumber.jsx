@@ -17,6 +17,7 @@ class InputNumber extends Component {
     min: 0,
     disabled: false,
     precision: false,
+    className: '',
     onChange: () => {},
     onBlur: () => {},
     onFocus: () => {},
@@ -30,6 +31,7 @@ class InputNumber extends Component {
     min: PropTypes.number,
     disabled: PropTypes.bool,
     precision: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    className: PropTypes.string,
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
@@ -62,7 +64,7 @@ class InputNumber extends Component {
       container, btn, btnLeft, inputContainer, input, btnRight, disable,
     } = css;
     return (
-      <div className={classnames(container, { [disable]: inputDisable })}
+      <div className={classnames(this.props.className, container, { [disable]: inputDisable })}
       onClick={onClick}
       onBlur={onBlur}
       onFocus={onFocus}
