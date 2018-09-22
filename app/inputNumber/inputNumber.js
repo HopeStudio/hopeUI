@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import css from './InputNumber.less';
+import css from './inputNumber.less';
 import Button from '../button/button';
 import { ArrowDown, ArrowUp } from '../icons/export';
 
