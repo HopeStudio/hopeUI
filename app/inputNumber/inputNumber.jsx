@@ -17,7 +17,10 @@ class InputNumber extends Component {
     min: 0,
     disabled: false,
     precision: false,
-    onChange: () => {}
+    onChange: () => {},
+    onBlur: () => {},
+    onFocus: () => {},
+    onClick: () => {},
   }
 
   static propTypes = {
@@ -27,7 +30,10 @@ class InputNumber extends Component {
     min: PropTypes.number,
     disabled: PropTypes.bool,
     precision: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    onClick: PropTypes.func,
   }
 
   constructor(props) {
@@ -50,13 +56,17 @@ class InputNumber extends Component {
   }
 
   render() {
-    const { disabled: inputDisable } = this.props;
+    const { disabled: inputDisable, onClick, onBlur, onFocus } = this.props;
     const { value, btnLeftDisable, btnRightDisable } = this.state;
     const {
       container, btn, btnLeft, inputContainer, input, btnRight, disable,
     } = css;
     return (
-      <div className={classnames(container, { [disable]: inputDisable })}>
+      <div className={classnames(container, { [disable]: inputDisable })}
+      onClick={onClick}
+      onBlur={onBlur}
+      onFocus={onFocus}
+      >
         <Button
           onClick={this.decrease}
           className={classnames(btn, btnLeft)}
