@@ -12,11 +12,11 @@ class InputNumber extends Component {
 
   static defaultProps = {
     value: 0,
-    step: 1,
+    step: 0.7,
     max: 10,
     min: -10,
     disabled: false,
-    precision: 2,
+    precision: 0,
     className: '',
     onChange: () => { },
     onBlur: () => { },
@@ -40,19 +40,11 @@ class InputNumber extends Component {
 
   constructor(props) {
     super(props);
-    const {
-      max, min, step, precision, value,
-    } = Object.assign(
-      {},
-      this.defaultProps,
-      props,
-    );
 
     this.state = {
-      max: InputNumber.format(max, precision),
-      min: InputNumber.format(min, precision),
-      step: InputNumber.format(step, precision),
-      value: InputNumber.format(value, precision),
+			value: this.props.value,
+			btnLeftDisable: false,
+			btnRightDisable: false,
     };
     const binds = ['increase', 'decrease', 'handleChange', 'setValue', 'plus', 'checkValue', 'test', 'handleBlur', 'handleEnterDown'];
     binds.forEach((item) => { this[item] = this[item].bind(this); });
@@ -108,8 +100,7 @@ class InputNumber extends Component {
   }
 
   checkValue(value) {
-    const { precision } = this.props;
-		const { max, min } = this.state;
+    const { precision, max, min } = this.props;
 		if(Object.is(value, NaN)) {
 			value = 0;
 		}
@@ -121,10 +112,8 @@ class InputNumber extends Component {
     }
     const btnState = this.checkButton(+value);
 
-    if (precision) {
-      value = typeof value === typeof 1
-        ? value.toFixed(precision) : value;
-    }
+  	value = typeof value === typeof 1
+      ? +value.toFixed(precision) : value;
     return {
       value,
       ...btnState,
@@ -134,7 +123,7 @@ class InputNumber extends Component {
   checkButton(value) {
     let btnLeftDisable = false;
     let btnRightDisable = false;
-    const { max, min } = this.state;
+    const { max, min } = this.props;
 
     if (value >= max) {
       btnRightDisable = true;
@@ -157,7 +146,7 @@ class InputNumber extends Component {
     });
   }
 
-  plus(step = this.state.step) {
+  plus(step = this.props.step) {
     if (this.props.disabled) {
       return;
     }
@@ -169,7 +158,7 @@ class InputNumber extends Component {
   }
 
   decrease() {
-    this.plus(-this.state.step);
+    this.plus(-this.props.step);
   }
 
   test(value) {
