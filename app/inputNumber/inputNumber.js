@@ -115,7 +115,7 @@ class InputNumber extends Component {
     const btnState = this.checkButton(+value);
 
     value = typeof value === typeof 1
-      ? +value.toFixed(precision) : value;
+      ? value.toFixed(precision) : value;
     return {
       value,
       ...btnState,
