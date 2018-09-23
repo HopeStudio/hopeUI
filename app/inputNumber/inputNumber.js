@@ -19,6 +19,7 @@ class InputNumber extends Component {
     precision: PropTypes.number,
     className: PropTypes.string,
     keyControls: PropTypes.bool,
+    controls: PropTypes.bool,
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
@@ -34,6 +35,7 @@ class InputNumber extends Component {
     precision: 0,
     className: '',
     keyControls: true,
+    controls: true,
     onChange: () => { },
     onBlur: () => { },
     onFocus: () => { },
@@ -62,7 +64,7 @@ class InputNumber extends Component {
     } = this.props;
     const { value, btnLeftDisable, btnRightDisable } = this.state;
     const {
-      container, btn, btnLeft, inputContainer, input, btnRight, disable,
+      container, btn, btnLeft, inputContainer, input, btnRight, disable, controls,
     } = css;
     return (
       <div
@@ -71,14 +73,14 @@ class InputNumber extends Component {
         
         <Button
           onClick={this.decrease}
-          className={classnames(btn, btnLeft)}
+          className={classnames(btn, btnLeft, { [controls]: this.props.controls })}
           icon={<ArrowDown width="100%" height="100%" />}
           type={btnLeftDisable || inputDisable ? 'disabled' : 'activate'}
           content=""
         />
         <Button
           onClick={this.increase}
-          className={classnames(btn, btnRight)}
+          className={classnames(btn, btnRight, { [controls]: this.props.controls })}
           icon={<ArrowUp width="100%" height="100%" />}
           type={btnRightDisable || inputDisable ? 'disabled' : 'activate'}
           content=""
