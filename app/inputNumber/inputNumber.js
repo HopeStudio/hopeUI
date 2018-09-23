@@ -8,9 +8,9 @@ import { ArrowDown, ArrowUp } from '../icons/export';
 class InputNumber extends Component {
   static format(props, precision) {
     return precision ? +props.toFixed(precision) : +props.toFixed(0);
-	}
-	
-	static propTypes = {
+  }
+
+  static propTypes = {
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     step: PropTypes.number,
     max: PropTypes.number,
@@ -18,6 +18,7 @@ class InputNumber extends Component {
     disabled: PropTypes.bool,
     precision: PropTypes.number,
     className: PropTypes.string,
+    keyControls: PropTypes.bool,
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
@@ -32,6 +33,7 @@ class InputNumber extends Component {
     disabled: false,
     precision: 0,
     className: '',
+    keyControls: true,
     onChange: () => { },
     onBlur: () => { },
     onFocus: () => { },
@@ -46,7 +48,7 @@ class InputNumber extends Component {
       btnLeftDisable: false,
       btnRightDisable: false,
     };
-    const binds = ['increase', 'decrease', 'handleChange', 'setValue', 'plus', 'checkValue', 'test', 'handleBlur', 'handleEnterDown'];
+    const binds = ['handleKeyDown', 'increase', 'decrease', 'handleChange', 'setValue', 'plus', 'checkValue', 'test', 'handleBlur', 'handleEnterDown'];
     binds.forEach((item) => { this[item] = this[item].bind(this); });
   }
 
@@ -56,7 +58,7 @@ class InputNumber extends Component {
 
   render() {
     const {
-      disabled: inputDisable, onClick, onBlur, onFocus,
+      disabled: inputDisable, onClick, onFocus,
     } = this.props;
     const { value, btnLeftDisable, btnRightDisable } = this.state;
     const {
@@ -66,8 +68,7 @@ class InputNumber extends Component {
       <div
         className={classnames(this.props.className, container, { [disable]: inputDisable })}
         onClick={onClick}
-        onBlur={onBlur}
-        onFocus={onFocus}
+        role="form"
       >
         <Button
           onClick={this.decrease}
@@ -85,7 +86,8 @@ class InputNumber extends Component {
             key="244"
             disabled={inputDisable}
             onBlur={this.handleBlur}
-            onKeyDown={this.handleEnterDown}
+            onKeyDown={this.handleKeyDown}
+            onFocus={onFocus}
           />
         </div>
         <Button
@@ -112,7 +114,7 @@ class InputNumber extends Component {
     }
     const btnState = this.checkButton(+value);
 
-  	value = typeof value === typeof 1
+    value = typeof value === typeof 1
       ? +value.toFixed(precision) : value;
     return {
       value,
@@ -177,7 +179,9 @@ class InputNumber extends Component {
 
   handleBlur(event) {
     const { value } = event.target;
+    const { onBlur } = this.props;
     this.setValue(+value);
+    onBlur(event);
   }
 
   handleEnterDown(event) {
@@ -186,6 +190,23 @@ class InputNumber extends Component {
       this.setValue(+value);
     }
   }
+
+  handleKeyDown(event) {
+    this.handleEnterDown(event);
+    if (this.props.keyControls) {
+      switch (event.keyCode) {
+        case 38:
+          this.increase();
+          break;
+        case 40:
+          this.decrease();
+          break;
+        default:
+          break;
+      }
+    }
+  }
+    
 }
 
 export default InputNumber;
