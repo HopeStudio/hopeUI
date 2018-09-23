@@ -67,9 +67,8 @@ class InputNumber extends Component {
     return (
       <div
         className={classnames(this.props.className, container, { [disable]: inputDisable })}
-        onClick={onClick}
-        role="form"
       >
+        
         <Button
           onClick={this.decrease}
           className={classnames(btn, btnLeft)}
@@ -77,7 +76,14 @@ class InputNumber extends Component {
           type={btnLeftDisable || inputDisable ? 'disabled' : 'activate'}
           content=""
         />
-        <div className={inputContainer}>
+        <Button
+          onClick={this.increase}
+          className={classnames(btn, btnRight)}
+          icon={<ArrowUp width="100%" height="100%" />}
+          type={btnRightDisable || inputDisable ? 'disabled' : 'activate'}
+          content=""
+        />
+         <div className={inputContainer}>
           <input
             type="text"
             className={input}
@@ -88,15 +94,9 @@ class InputNumber extends Component {
             onBlur={this.handleBlur}
             onKeyDown={this.handleKeyDown}
             onFocus={onFocus}
+            onClick={onClick}
           />
         </div>
-        <Button
-          onClick={this.increase}
-          className={classnames(btn, btnRight)}
-          icon={<ArrowUp width="100%" height="100%" />}
-          type={btnRightDisable || inputDisable ? 'disabled' : 'activate'}
-          content=""
-        />
       </div>
     );
   }
@@ -206,7 +206,6 @@ class InputNumber extends Component {
       }
     }
   }
-    
 }
 
 export default InputNumber;
