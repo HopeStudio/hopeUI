@@ -40,4 +40,35 @@ describe('计数器组件测试', () => {
     btns.at(1).simulate('click');
     expect(app1.state().value).toBe(3);
   });
+
+  test('测试数据显示', () => {
+    const app1 = mount(<InputNumber max={10} min={-50} step={0.1} precision={2} value={3} />);
+    const btns = app1.find(Button);
+    
+    expect(app1.find('input').at(0).props().value).toBe('3.00');
+    btns.at(1).simulate('click');
+    expect(app1.find('input').at(0).props().value).toBe('3.10');
+
+    app1.setState({value: '-'}).update();
+    expect(app1.find('input').at(0).props().value).toBe('-');
+    app1.find('input').at(0).simulate('blur');
+    expect(app1.find('input').at(0).props().value).toBe('0.00');
+
+    app1.setState({value: '.23'}).update();
+    expect(app1.find('input').at(0).props().value).toBe('.23');
+    app1.find('input').at(0).simulate('keyDown',{keyCode: 13});
+    expect(app1.find('input').at(0).props().value).toBe('0.23');
+
+
+    app1.setState({value: '-32.'}).update();
+    btns.at(0).simulate('click');
+    expect(app1.find('input').at(0).props().value).toBe('-32.10'); 
+    
+    app1.setState({value: 23}).update();
+    expect(app1.find('input').at(0).props().value).toBe('10.00');
+    app1.setState({value: -100});
+    expect(app1.find('input').at(0).props().value).toBe('-50.00');
+
+
+  })
 });
