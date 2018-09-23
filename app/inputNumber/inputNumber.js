@@ -198,9 +198,11 @@ class InputNumber extends Component {
     if (this.props.keyControls) {
       switch (event.keyCode) {
         case 38:
+          event.preventDefault();
           this.increase();
           break;
         case 40:
+          event.preventDefault();
           this.decrease();
           break;
         default:
