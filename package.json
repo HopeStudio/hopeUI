@@ -88,6 +88,11 @@
     "setupFiles": [
       "jest-canvas-mock",
       "<rootDir>/test/enzyme.setup.js"
+    ],
+    "testURL": "http://localhost",
+    "testMatch": [
+      "<rootDir>/app/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/app/**/?(*.)(spec|test).{js,jsx,mjs}"
     ]
   }
 }

@@ -1,0 +1,82 @@
+@import '../rules/colors.less';
+
+@height: 40px;
+@width: 50px;
+.container {
+  display: inline-block;
+  width: 2*@width + 100 + 2*16;
+  height: @height;
+  position: relative;
+}
+
+.input {
+    display: inline-block;
+    box-sizing: content-box;
+    width: 100px;
+    height: @height;
+    padding: 0 16 + @width;
+    line-height: @height;
+    outline: none;
+    border: none;
+    text-align: center;
+    background: inherit;
+    box-shadow: 0 0 0 1px @grey300;
+    border-radius: 5px;
+    transition: all .3s;
+
+    &:hover {
+      box-shadow: 0 0 0 1px @blue100;
+    }
+    &:focus {
+      box-shadow: 0 0 0 1px @blue300;
+    }
+    
+}
+
+.btn {
+  display: none !important;
+}
+
+.controls.btn {
+    display: inline-block !important;
+    box-sizing: border-box;
+    float: left;
+    width: @width;
+    height: @height;
+    outline: none;
+    user-select: none;
+    margin-left: 0 !important;
+    background: @grey300;
+    position: absolute !important;
+    top: 0;
+    &::after {
+      box-shadow: none !important;
+    }
+    &:hover ~ div .input {
+      box-shadow: 0 0 0 1px @blue300;
+    }
+}
+
+.btnLeft {
+    border-radius: 5px 0 0 5px !important;
+    &::after {
+      border-radius: 5px 0 0 5px !important;
+    }
+    left: 0;
+}
+
+.btnRight {
+    border-radius: 0 5px 5px 0 !important;
+    &::after {
+      border-radius: 0 5px 5px 0 !important;
+    }
+    right: 0;
+}
+
+.disable {
+  background: @grey300;
+  border-color: @grey300;
+  .input {
+    color: @grey500;
+  }
+}
