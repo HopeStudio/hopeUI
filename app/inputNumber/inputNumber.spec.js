@@ -32,13 +32,13 @@ describe('计数器组件测试', () => {
     const app1 = mount(<InputNumber max={10} min={2} step={1} value={5} />);
     const btns = app1.find(Button);
     btns.at(0).simulate('click');
-    expect(app1.state().value).toBe(4);
+    expect(app1.state().value).toBe('4');
     btns.at(0).simulate('click');
     btns.at(0).simulate('click');
-    expect(app1.state().value).toBe(2);
+    expect(app1.state().value).toBe('2');
     expect(app1.find(Button).at(0).prop('type')).toBe('disabled');
     btns.at(1).simulate('click');
-    expect(app1.state().value).toBe(3);
+    expect(app1.state().value).toBe('3');
   });
 
   test('测试数据显示', () => {
